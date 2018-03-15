@@ -14,7 +14,9 @@
   },
   "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "activationEvents": [
-    "onLanguage:xml"
+    "onLanguage:xml",
+    "onCommand:extension.minify",
+    "onCommand:extension.prettify"
   ],
   "main": "extension.js",
   "contributes": {
