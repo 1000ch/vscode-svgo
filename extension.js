@@ -47,3 +47,5 @@ exports.activate = ({ subscriptions }) => {
   subscriptions.push(minify);
   subscriptions.push(prettify);
 };
+
+exports.deactivate = () => {};

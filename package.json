@@ -1,5 +1,6 @@
 {
   "name": "svgo",
+  "private": true,
   "version": "0.2.0",
   "displayName": "svgo",
   "description": "Minify SVG with SVGO",
@@ -14,7 +15,6 @@
   },
   "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "activationEvents": [
-    "onLanguage:xml",
     "onCommand:extension.minify",
     "onCommand:extension.prettify"
   ],
