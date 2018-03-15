@@ -1,0 +1,47 @@
+{
+  "name": "svgo",
+  "version": "0.0.0",
+  "displayName": "svgo",
+  "description": "Minify SVG with SVGO",
+  "publisher": "1000ch",
+  "author": "1000ch",
+  "repository": "https://github.com/1000ch/vscode-svgo",
+  "homepage": "https://github.com/1000ch/vscode-svgo#readme",
+  "bugs": "https://github.com/1000ch/vscode-svgo/issues",
+  "license": "MIT",
+  "engines": {
+    "vscode": ">=1.20.0"
+  },
+  "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
+  "activationEvents": [
+    "onLanguage:xml"
+  ],
+  "main": "extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "svgo configuration options",
+      "properties": {
+        "svgo.indent": {
+          "type": "number",
+          "default": 2,
+          "description": "Indent size to apply on prettify"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.minify",
+        "title": "Minify SVG"
+      },
+      {
+        "command": "extension.prettify",
+        "title": "Prettify SVG"
+      }
+    ]
+  },
+  "dependencies": {
+    "svgo": "^1.0.5",
+    "vscode-set-text": "^1.0.0"
+  }
+}
