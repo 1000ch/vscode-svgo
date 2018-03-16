@@ -3,7 +3,7 @@ const setText = require('vscode-set-text');
 const SVGO = require('svgo');
 
 exports.activate = ({ subscriptions }) => {
-	const workspaceConfig = workspace.getConfiguration('svgo');
+	const workspaceConfig = vscode.workspace.getConfiguration('svgo');
 
   const minify = vscode.commands.registerCommand('extension.minify', () => {
     const { document } = vscode.window.activeTextEditor;
