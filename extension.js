@@ -1,6 +1,19 @@
 const vscode = require('vscode');
-const setText = require('vscode-set-text');
 const SVGO = require('svgo');
+
+function setText(text) {
+  const { document } = vscode.window.activeTextEditor;
+
+  return new Promise(resolve => {
+    vscode.window.activeTextEditor.edit(builder => {
+      const lastLine = document.lineAt(document.lineCount - 2);
+      const start = new vscode.Position(0, 0);
+      const end = new vscode.Position(document.lineCount - 1, lastLine.text.length);
+      builder.replace(new vscode.Range(start, end), text);
+      resolve();
+    });
+  });
+}
 
 exports.activate = ({ subscriptions }) => {
 	const workspaceConfig = vscode.workspace.getConfiguration('svgo');
