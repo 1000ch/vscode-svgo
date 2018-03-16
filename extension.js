@@ -15,6 +15,19 @@ function setText(text) {
   });
 }
 
+async function applySvgo(text, { pretty = false, indent = 2 }) {
+  const svgo = new SVGO({
+    js2svg: {
+      pretty,
+      indent
+    }
+  });
+
+  const { data } = await svgo.optimize(text);
+
+  return Buffer.from(data);
+}
+
 exports.activate = ({ subscriptions }) => {
 	const workspaceConfig = vscode.workspace.getConfiguration('svgo');
 
@@ -25,15 +38,13 @@ exports.activate = ({ subscriptions }) => {
       return;
     }
 
-    const svgo = new SVGO({
-      js2svg: {
-        pretty: false
-      }
-    });
-
     (async () => {
-      const result = await svgo.optimize(document.getText());
-      await setText(Buffer.from(result.data));
+      const text = await applySvgo(document.getText(), {
+        pretty: false,
+        indent: 0
+      });
+
+      await setText(text);
     })();
   });
 
@@ -44,16 +55,13 @@ exports.activate = ({ subscriptions }) => {
       return;
     }
 
-    const svgo = new SVGO({
-      js2svg: {
+    (async () => {
+      const text = await applySvgo(document.getText(), {
         pretty: true,
         indent: workspaceConfig.get('indent')
-      }
-    });
+      });
 
-    (async () => {
-      const result = await svgo.optimize(document.getText());
-      await setText(Buffer.from(result.data));
+      await setText(text);
     })();
   });
 
