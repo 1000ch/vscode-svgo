@@ -35,7 +35,7 @@ function cannotApply(document) {
 }
 
 exports.activate = ({ subscriptions }) => {
-  const minify = commands.registerCommand('extension.minify', async () => {
+  const minify = commands.registerCommand('svgo.minify', async () => {
     const { document } = window.activeTextEditor;
 
     if (cannotApply(document)) {
@@ -50,7 +50,7 @@ exports.activate = ({ subscriptions }) => {
     await setText(text);
   });
 
-  const prettify = commands.registerCommand('extension.prettify', async () => {
+  const prettify = commands.registerCommand('svgo.prettify', async () => {
     const { document } = window.activeTextEditor;
 
     if (cannotApply(document)) {

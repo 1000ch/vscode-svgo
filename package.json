@@ -15,8 +15,8 @@
   },
   "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "activationEvents": [
-    "onCommand:extension.minify",
-    "onCommand:extension.prettify"
+    "onCommand:svgo.minify",
+    "onCommand:svgo.prettify"
   ],
   "main": "extension.js",
   "contributes": {
@@ -33,11 +33,11 @@
     },
     "commands": [
       {
-        "command": "extension.minify",
+        "command": "svgo.minify",
         "title": "Minify SVG"
       },
       {
-        "command": "extension.prettify",
+        "command": "svgo.prettify",
         "title": "Prettify SVG"
       }
     ]
