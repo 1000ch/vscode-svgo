@@ -1,21 +1,21 @@
-const vscode = require('vscode');
+const { workspace, window, commands, Position, Range } = require('vscode');
 const SVGO = require('svgo');
 
 function setText(text) {
-  const { document } = vscode.window.activeTextEditor;
+  const { document } = window.activeTextEditor;
 
   return new Promise(resolve => {
-    vscode.window.activeTextEditor.edit(builder => {
+    window.activeTextEditor.edit(builder => {
       const lastLine = document.lineAt(document.lineCount - 2);
-      const start = new vscode.Position(0, 0);
-      const end = new vscode.Position(document.lineCount - 1, lastLine.text.length);
-      builder.replace(new vscode.Range(start, end), text);
+      const start = new Position(0, 0);
+      const end = new Position(document.lineCount - 1, lastLine.text.length);
+      builder.replace(new Range(start, end), text);
       resolve();
     });
   });
 }
 
-async function applySvgo(text, { pretty = false, indent = 2 }) {
+async function svgo(text, { pretty = false, indent = 2 }) {
   const svgo = new SVGO({
     js2svg: {
       pretty,
@@ -25,44 +25,44 @@ async function applySvgo(text, { pretty = false, indent = 2 }) {
 
   const { data } = await svgo.optimize(text);
 
-  return Buffer.from(data);
+  return data;
+}
+
+function cannotApply(document) {
+  const { languageId, fileName } = document;
+
+  return languageId !== 'xml' || !fileName.includes('.svg');
 }
 
 exports.activate = ({ subscriptions }) => {
-	const workspaceConfig = vscode.workspace.getConfiguration('svgo');
+  const minify = commands.registerCommand('extension.minify', async () => {
+    const { document } = window.activeTextEditor;
 
-  const minify = vscode.commands.registerCommand('extension.minify', () => {
-    const { document } = vscode.window.activeTextEditor;
-
-    if (document.languageId !== 'xml' || !document.fileName.includes('.svg')) {
+    if (cannotApply(document)) {
       return;
     }
 
-    (async () => {
-      const text = await applySvgo(document.getText(), {
-        pretty: false,
-        indent: 0
-      });
+    const text = await svgo(document.getText(), {
+      pretty: false,
+      indent: 0
+    });
 
-      await setText(text);
-    })();
+    await setText(text);
   });
 
-  const prettify = vscode.commands.registerCommand('extension.prettify', () => {
-    const { document } = vscode.window.activeTextEditor;
+  const prettify = commands.registerCommand('extension.prettify', async () => {
+    const { document } = window.activeTextEditor;
 
-    if (document.languageId !== 'xml' || !document.fileName.includes('.svg')) {
+    if (cannotApply(document)) {
       return;
     }
 
-    (async () => {
-      const text = await applySvgo(document.getText(), {
-        pretty: true,
-        indent: workspaceConfig.get('indent')
-      });
+    const text = await svgo(document.getText(), {
+      pretty: true,
+      indent: workspace.getConfiguration('svgo').get('indent')
+    });
 
-      await setText(text);
-    })();
+    await setText(text);
   });
 
   subscriptions.push(minify);
