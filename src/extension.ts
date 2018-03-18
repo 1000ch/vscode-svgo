@@ -1,26 +1,7 @@
 import * as vscode from 'vscode';
+import setText from 'vscode-set-text';
 import SVGO = require('svgo');
-const { workspace, window, commands, Position, Range } = vscode;
-
-function setText(text: string) {
-  const { activeTextEditor } = window;
-
-  if (!activeTextEditor) {
-    return Promise.reject(null);
-  }
-
-  const { document } = activeTextEditor;
-
-  return new Promise<void>((resolve, reject) => {
-    activeTextEditor.edit((builder: vscode.TextEditorEdit) => {
-      const lastLine = document.lineAt(document.lineCount - 2);
-      const start = new Position(0, 0);
-      const end = new Position(document.lineCount - 1, lastLine.text.length);
-      builder.replace(new Range(start, end), text);
-      resolve();
-    });
-  });
-}
+const { workspace, window, commands } = vscode;
 
 async function optimize(text: string, { pretty = false, indent = 2 }) {
   const svgo = new SVGO({

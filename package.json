@@ -48,7 +48,8 @@
     ]
   },
   "dependencies": {
-    "svgo": "^1.0.5"
+    "svgo": "^1.0.5",
+    "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
     "@types/svgo": "^1.0.0",
