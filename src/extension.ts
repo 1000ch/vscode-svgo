@@ -8,7 +8,10 @@ async function optimize(text: string, { pretty = false, indent = 2 }) {
     js2svg: {
       pretty,
       indent
-    }
+    },
+    plugins: [{
+      removeTitle: false
+    }]
   });
 
   const { data } = await svgo.optimize(text);
