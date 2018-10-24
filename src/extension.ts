@@ -1,19 +1,26 @@
 import * as vscode from 'vscode';
 import setText from 'vscode-set-text';
+import merge from 'lodash.merge';
 import SVGO = require('svgo');
 const { workspace, window, commands } = vscode;
 
-async function optimize(text: string, { pretty = false, indent = 2 }) {
-  const svgo = new SVGO({
-    js2svg: {
-      pretty,
-      indent
-    },
-    plugins: [{
-      removeTitle: false
-    }]
-  });
+function getConfig(config: SVGO.Options): SVGO.Options {
+  const svgoConfig = workspace.getConfiguration('svgo');
+  const js2svg = {
+    indent: svgoConfig.get('indent') as number,
+    pretty: svgoConfig.get('pretty') as boolean,
+    useShortTags: svgoConfig.get('useShortTags') as boolean
+  };
+  const plugins = [{ removeTitle: false }];
 
+  return merge(config, {
+    js2svg,
+    plugins
+  });
+}
+
+async function optimize(text: string, config: SVGO.Options) {
+  const svgo = new SVGO(config);
   const { data } = await svgo.optimize(text);
 
   return data;
@@ -37,10 +44,8 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const text = await optimize(document.getText(), {
-      pretty: false,
-      indent: 0
-    });
+    const config = getConfig();
+    const text = await optimize(document.getText(), config);
 
     await setText(text);
   });
@@ -56,10 +61,9 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const text = await optimize(document.getText(), {
-      pretty: true,
-      indent: workspace.getConfiguration('svgo').get('indent') as number
-    });
+    const config = getConfig();
+    config.js2svg.pretty = true;
+    const text = await optimize(document.getText(), config);
 
     await setText(text);
   });
