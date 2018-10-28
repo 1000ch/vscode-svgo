@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import setText from 'vscode-set-text';
-import merge from 'lodash.merge';
+import merge = require('lodash.merge');
 import SVGO = require('svgo');
 const { workspace, window, commands } = vscode;
 
@@ -44,7 +44,11 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const config = getConfig();
+    const config = getConfig({
+      js2svg: {
+        pretty: false
+      }
+    });
     const text = await optimize(document.getText(), config);
 
     await setText(text);
@@ -61,8 +65,11 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const config = getConfig();
-    config.js2svg.pretty = true;
+    const config = getConfig({
+      js2svg: {
+        pretty: true
+      }
+    });
     const text = await optimize(document.getText(), config);
 
     await setText(text);
