@@ -11,7 +11,11 @@ function getConfig(config: SVGO.Options): SVGO.Options {
     pretty: svgoConfig.get('pretty') as boolean,
     useShortTags: svgoConfig.get('useShortTags') as boolean
   };
-  const plugins = [{ removeTitle: false }];
+  const plugins = [{
+    removeTitle: false
+  }, {
+    removeViewBox: false
+  }];
 
   return merge(config, {
     js2svg,
