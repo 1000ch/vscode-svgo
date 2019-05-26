@@ -6,6 +6,8 @@
   "description": "Minify SVG with SVGO",
   "publisher": "1000ch",
   "author": "1000ch",
+  "categories": ["Formatters"],
+  "icon": "img/icon.png",
   "repository": "https://github.com/1000ch/vscode-svgo",
   "homepage": "https://github.com/1000ch/vscode-svgo#readme",
   "bugs": "https://github.com/1000ch/vscode-svgo/issues",
