@@ -8,7 +8,23 @@ Execute `Extensions: Install Extensions` command from [Command Palette](https://
 
 ## Usage
 
-In a SVG file, open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and choose **Minify SVG** or **Prettify SVG**.
+In a SVG file, open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
+
+### Minify current SVG file
+
+To minify current SVG file.
+
+### Minify SVG files in workspace
+
+To minify all SVG files in workspace.
+
+### Prettify current SVG file
+
+To prettify current SVG file.
+
+### Prettify SVG files in workspace
+
+To prettify all SVG files in workspace.
 
 ## Config
 
