@@ -23,14 +23,14 @@ function getConfig(config: SVGO.Options): SVGO.Options {
   });
 }
 
-async function optimize(text: string, config: SVGO.Options) {
+async function optimize(text: string, config: SVGO.Options): Promise<string> {
   const svgo = new SVGO(config);
   const { data } = await svgo.optimize(text);
 
   return data;
 }
 
-function canApply(document: vscode.TextDocument) {
+function canApply(document: vscode.TextDocument): boolean {
   const { languageId, fileName } = document;
 
   return languageId === 'xml' && fileName.includes('.svg');
