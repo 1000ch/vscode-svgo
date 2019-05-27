@@ -58,6 +58,22 @@ export function activate(context: vscode.ExtensionContext) {
     await setText(text);
   });
 
+  const minifyAll = commands.registerCommand('svgo.minify-all', async () => {
+    const config = getConfig({
+      js2svg: {
+        pretty: false
+      }
+    });
+
+    workspace.textDocuments.filter(textDocument => {
+      return canApply(textDocument);
+    }).forEach(async textDocument => {
+      const textEditor = await window.showTextDocument(textDocument);
+      const text = await optimize(textDocument.getText(), config);
+      await setText(text, textEditor);
+    });
+  });
+
   const prettify = commands.registerCommand('svgo.prettify', async () => {
     if (!window.activeTextEditor) {
       return;
@@ -79,8 +95,26 @@ export function activate(context: vscode.ExtensionContext) {
     await setText(text);
   });
 
+  const prettifyAll = commands.registerCommand('svgo.prettify-all', async () => {
+    const config = getConfig({
+      js2svg: {
+        pretty: true
+      }
+    });
+
+    workspace.textDocuments.filter(textDocument => {
+      return canApply(textDocument);
+    }).forEach(async textDocument => {
+      const textEditor = await window.showTextDocument(textDocument);
+      const text = await optimize(textDocument.getText(), config);
+      await setText(text, textEditor);
+    });
+  });
+
   context.subscriptions.push(minify);
+  context.subscriptions.push(minifyAll);
   context.subscriptions.push(prettify);
+  context.subscriptions.push(prettifyAll);
 };
 
 export function deactivate() {}
