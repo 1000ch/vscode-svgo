@@ -30,10 +30,10 @@ async function optimize(text: string, config: SVGO.Options): Promise<string> {
   return data;
 }
 
-function canApply(document: vscode.TextDocument): boolean {
+function isSVG(document: vscode.TextDocument): boolean {
   const { languageId, fileName } = document;
 
-  return languageId === 'xml' && fileName.includes('.svg');
+  return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const { document } = window.activeTextEditor;
 
-    if (!canApply(document)) {
+    if (!isSVG(document)) {
       return;
     }
 
@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     workspace.textDocuments.filter(textDocument => {
-      return canApply(textDocument);
+      return isSVG(textDocument);
     }).forEach(async textDocument => {
       const textEditor = await window.showTextDocument(textDocument);
       const text = await optimize(textDocument.getText(), config);
@@ -81,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const { document } = window.activeTextEditor;
 
-    if (!canApply(document)) {
+    if (!isSVG(document)) {
       return;
     }
 
@@ -103,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     workspace.textDocuments.filter(textDocument => {
-      return canApply(textDocument);
+      return isSVG(textDocument);
     }).forEach(async textDocument => {
       const textEditor = await window.showTextDocument(textDocument);
       const text = await optimize(textDocument.getText(), config);
