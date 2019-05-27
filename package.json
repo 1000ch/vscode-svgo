@@ -25,7 +25,9 @@
   "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "activationEvents": [
     "onCommand:svgo.minify",
-    "onCommand:svgo.prettify"
+    "onCommand:svgo.minify-all",
+    "onCommand:svgo.prettify",
+    "onCommand:svgo.prettify-all"
   ],
   "main": "out/extension.js",
   "contributes": {
