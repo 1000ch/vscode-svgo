@@ -23,17 +23,35 @@ function getConfig(config: SVGO.Options): SVGO.Options {
   });
 }
 
-async function optimize(text: string, config: SVGO.Options) {
+async function optimize(text: string, config: SVGO.Options): Promise<string> {
   const svgo = new SVGO(config);
   const { data } = await svgo.optimize(text);
 
   return data;
 }
 
-function canApply(document: vscode.TextDocument) {
+const minifyText = async (text: string) => await optimize(text, getConfig({
+  js2svg: {
+    pretty: false
+  }
+}));
+
+const prettifyText = async (text: string) => await optimize(text, getConfig({
+  js2svg: {
+    pretty: true
+  }
+}));
+
+function isSVG(document: vscode.TextDocument): boolean {
   const { languageId, fileName } = document;
 
-  return languageId === 'xml' && fileName.includes('.svg');
+  return languageId === 'xml' && fileName.endsWith('.svg');
+}
+
+function getFiles(): vscode.TextDocument[] {
+  return workspace.textDocuments.filter(textDocument => {
+    return isSVG(textDocument);
+  });
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -44,18 +62,21 @@ export function activate(context: vscode.ExtensionContext) {
 
     const { document } = window.activeTextEditor;
 
-    if (!canApply(document)) {
+    if (!isSVG(document)) {
       return;
     }
 
-    const config = getConfig({
-      js2svg: {
-        pretty: false
-      }
-    });
-    const text = await optimize(document.getText(), config);
+    const text = await minifyText(document.getText());
 
     await setText(text);
+  });
+
+  const minifyAll = commands.registerCommand('svgo.minify-all', async () => {
+    getFiles().forEach(async textDocument => {
+      const textEditor = await window.showTextDocument(textDocument);
+      const text = await minifyText(textDocument.getText());
+      await setText(text, textEditor);
+    });
   });
 
   const prettify = commands.registerCommand('svgo.prettify', async () => {
@@ -65,22 +86,27 @@ export function activate(context: vscode.ExtensionContext) {
 
     const { document } = window.activeTextEditor;
 
-    if (!canApply(document)) {
+    if (!isSVG(document)) {
       return;
     }
 
-    const config = getConfig({
-      js2svg: {
-        pretty: true
-      }
-    });
-    const text = await optimize(document.getText(), config);
+    const text = await prettifyText(document.getText());
 
     await setText(text);
   });
 
+  const prettifyAll = commands.registerCommand('svgo.prettify-all', async () => {
+    getFiles().forEach(async textDocument => {
+      const textEditor = await window.showTextDocument(textDocument);
+      const text = await prettifyText(textDocument.getText());
+      await setText(text, textEditor);
+    });
+  });
+
   context.subscriptions.push(minify);
+  context.subscriptions.push(minifyAll);
   context.subscriptions.push(prettify);
+  context.subscriptions.push(prettifyAll);
 };
 
 export function deactivate() {}

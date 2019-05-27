@@ -43,11 +43,19 @@
     "commands": [
       {
         "command": "svgo.minify",
-        "title": "Minify SVG"
+        "title": "Minify current SVG"
+      },
+      {
+        "command": "svgo.minify-all",
+        "title": "Minify SVGs files in workspace"
       },
       {
         "command": "svgo.prettify",
-        "title": "Prettify SVG"
+        "title": "Prettify current SVG"
+      },
+      {
+        "command": "svgo.prettify-all",
+        "title": "Prettify SVGs in workspace"
       }
     ]
   },
