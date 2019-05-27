@@ -2,25 +2,25 @@ import * as vscode from 'vscode';
 import setText from 'vscode-set-text';
 import merge = require('lodash.merge');
 import SVGO = require('svgo');
+import SVGOConfig = require('svgo/lib/svgo/config');
+
+declare function SVGOConfig(config: object): SVGO.Options;
+
 const { workspace, window, commands } = vscode;
 
 function getConfig(config: SVGO.Options): SVGO.Options {
   const svgoConfig = workspace.getConfiguration('svgo');
-  const js2svg = {
-    indent: svgoConfig.get('indent') as number,
-    pretty: svgoConfig.get('pretty') as boolean,
-    useShortTags: svgoConfig.get('useShortTags') as boolean
-  };
-  const plugins = [{
-    removeTitle: false
-  }, {
-    removeViewBox: false
-  }];
-
-  return merge(config, {
-    js2svg,
-    plugins
+  const { js2svg, svg2js, plugins } = SVGOConfig({
+    js2svg: svgoConfig.get('js2svg') as object,
+    svg2js: svgoConfig.get('svg2js') as object,
+    plugins: svgoConfig.get('plugins') as object[]
   });
+
+  return merge({
+    js2svg,
+    svg2js,
+    plugins
+  }, config);
 }
 
 async function optimize(text: string, config: SVGO.Options): Promise<string> {

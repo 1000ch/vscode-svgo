@@ -35,10 +35,29 @@
       "type": "object",
       "title": "svgo configuration options",
       "properties": {
-        "svgo.indent": {
-          "type": "number",
-          "default": 2,
-          "description": "Indent size to apply on prettify"
+        "svgo.js2svg": {
+          "type": "object",
+          "default": {
+            "indent": 2
+          },
+          "description": "js2svg config which will be passed to SVGO"
+        },
+        "svgo.svg2js": {
+          "type": "object",
+          "default": {},
+          "description": "svg2js config which will be passed to SVGO"
+        },
+        "svgo.plugins": {
+          "type": "array",
+          "default": [
+            {
+              "removeTitle": false
+            },
+            {
+              "removeViewBox": false
+            }
+          ],
+          "description": "Plugins config which will be passed to SVGO"
         }
       }
     },

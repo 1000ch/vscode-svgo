@@ -9,6 +9,7 @@
     "sourceMap": false,
     "rootDir": "src",
     "strict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "noImplicitAny": false
   }
 }

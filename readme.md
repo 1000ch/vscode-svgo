@@ -28,9 +28,11 @@ To prettify all SVG files in workspace.
 
 ## Config
 
-### Indent
+### [svg2js](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#2-svg2js)
 
-Indent size to apply on prettify.
+### [plugins](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#3-plugins)
+
+### [js2svg](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#4-js2svg)
 
 ## License
 
