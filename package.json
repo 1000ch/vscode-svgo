@@ -35,29 +35,240 @@
       "type": "object",
       "title": "svgo configuration options",
       "properties": {
-        "svgo.js2svg": {
-          "type": "object",
-          "default": {
-            "indent": 2
-          },
-          "description": "js2svg config which will be passed to SVGO"
+        "svgo.removeDoctype": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove doctype declaration"
         },
-        "svgo.svg2js": {
-          "type": "object",
-          "default": {},
-          "description": "svg2js config which will be passed to SVGO"
+        "svgo.removeXMLProcInst": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove XML processing instructions"
         },
-        "svgo.plugins": {
-          "type": "array",
-          "default": [
-            {
-              "removeTitle": false
-            },
-            {
-              "removeViewBox": false
-            }
-          ],
-          "description": "Plugins config which will be passed to SVGO"
+        "svgo.removeComments": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove comments"
+        },
+        "svgo.removeMetadata": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove <metadata>"
+        },
+        "svgo.removeXMLNS": {
+          "type": "boolean",
+          "default": false,
+          "description": "removes xmlns attribute (for inline svg, disabled by default)"
+        },
+        "svgo.removeEditorsNSData": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove editors namespaces, elements, and attributes"
+        },
+        "svgo.cleanupAttrs": {
+          "type": "boolean",
+          "default": true,
+          "description": "cleanup attributes from newlines, trailing, and repeating spaces"
+        },
+        "svgo.inlineStyles": {
+          "type": "boolean",
+          "default": true,
+          "description": "move and merge styles from <style> elements to element style attributes"
+        },
+        "svgo.minifyStyles": {
+          "type": "boolean",
+          "default": true,
+          "description": "minify <style> elements content with CSSO"
+        },
+        "svgo.convertStyleToAttrs": {
+          "type": "boolean",
+          "default": true,
+          "description": "convert styles into attributes"
+        },
+        "svgo.cleanupIDs": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove unused and minify used IDs"
+        },
+        "svgo.prefixIds": {
+          "type": "boolean",
+          "default": true,
+          "description": "prefix IDs and classes with the SVG filename or an arbitrary string"
+        },
+        "svgo.removeRasterImages": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove raster images (disabled by default)"
+        },
+        "svgo.removeUselessDefs": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove elements of <defs> without id"
+        },
+        "svgo.cleanupNumericValues": {
+          "type": "boolean",
+          "default": true,
+          "description": "round numeric values to the fixed precision, remove default px units"
+        },
+        "svgo.cleanupListOfValues": {
+          "type": "boolean",
+          "default": true,
+          "description": "round numeric values in attributes that take a list of numbers (like viewBox or enable-background)"
+        },
+        "svgo.convertColors": {
+          "type": "boolean",
+          "default": true,
+          "description": "convert colors (from rgb() to #rrggbb, from #rrggbb to #rgb)"
+        },
+        "svgo.removeUnknownsAndDefaults": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove unknown elements content and attributes, remove attrs with default values"
+        },
+        "svgo.removeNonInheritableGroupAttrs": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove non-inheritable group's presentation attributes"
+        },
+        "svgo.removeUselessStrokeAndFill": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove useless stroke and fill attrs"
+        },
+        "svgo.removeViewBox": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove viewBox attribute when possible"
+        },
+        "svgo.cleanupEnableBackground": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove or cleanup enable-background attribute when possible"
+        },
+        "svgo.removeHiddenElems": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove hidden elements"
+        },
+        "svgo.removeEmptyText": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove empty Text elements"
+        },
+        "svgo.convertShapeToPath": {
+          "type": "boolean",
+          "default": true,
+          "description": "convert some basic shapes to <path>"
+        },
+        "svgo.moveElemsAttrsToGroup": {
+          "type": "boolean",
+          "default": true,
+          "description": "move elements' attributes to their enclosing group"
+        },
+        "svgo.moveGroupAttrsToElems": {
+          "type": "boolean",
+          "default": true,
+          "description": "move some group attributes to the contained elements"
+        },
+        "svgo.collapseGroups": {
+          "type": "boolean",
+          "default": true,
+          "description": "collapse useless groups"
+        },
+        "svgo.convertPathData": {
+          "type": "boolean",
+          "default": true,
+          "description": "convert Path data to relative or absolute (whichever is shorter), convert one segment to another, trim useless delimiters, smart rounding, and much more"
+        },
+        "svgo.convertTransform": {
+          "type": "boolean",
+          "default": true,
+          "description": "collapse multiple transforms into one, convert matrices to the short aliases, and much more"
+        },
+        "svgo.removeEmptyAttrs": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove empty attributes"
+        },
+        "svgo.removeEmptyContainers": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove empty Container elements"
+        },
+        "svgo.mergePaths": {
+          "type": "boolean",
+          "default": true,
+          "description": "merge multiple Paths into one"
+        },
+        "svgo.removeUnusedNS": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove unused namespaces declaration"
+        },
+        "svgo.sortAttrs": {
+          "type": "boolean",
+          "default": false,
+          "description": "sort element attributes for epic readability (disabled by default)"
+        },
+        "svgo.removeTitle": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove <title>"
+        },
+        "svgo.removeDesc": {
+          "type": "boolean",
+          "default": true,
+          "description": "remove <desc>"
+        },
+        "svgo.removeDimensions": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove width/height attributes if viewBox is present (opposite to removeViewBox, disable it first) (disabled by default)"
+        },
+        "svgo.removeAttrs": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove attributes by pattern (disabled by default)"
+        },
+        "svgo.removeAttributesBySelector": {
+          "type": "boolean",
+          "default": false,
+          "description": "removes attributes of elements that match a css selector (disabled by default)"
+        },
+        "svgo.removeElementsByAttr": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove arbitrary elements by ID or className (disabled by default)"
+        },
+        "svgo.addClassesToSVGElement": {
+          "type": "boolean",
+          "default": false,
+          "description": "add classnames to an outer <svg> element (disabled by default)"
+        },
+        "svgo.removeStyleElement": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove <style> elements (disabled by default)"
+        },
+        "svgo.removeScriptElement": {
+          "type": "boolean",
+          "default": false,
+          "description": "remove <script> elements (disabled by default)"
+        },
+        "svgo.addAttributesToSVGElement": {
+          "type": "boolean",
+          "default": false,
+          "description": "adds attributes to an outer <svg> element (disabled by default)"
+        },
+        "svgo.removeOffCanvasPaths": {
+          "type": "boolean",
+          "default": false,
+          "description": "removes elements that are drawn outside of the viewbox (disabled by default)"
+        },
+        "svgo.reusePaths": {
+          "type": "boolean",
+          "default": false,
+          "description": "Find duplicated elements and replace them with links (disabled by default)"
         }
       }
     },
@@ -82,14 +293,14 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.1",
-    "svgo": "^1.1.1",
+    "svgo": "^1.2.2",
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.4",
+    "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^1.0.1",
     "terser": "^4.0.0",
-    "typescript": "^3.3.1",
-    "vscode": "^1.1.29"
+    "typescript": "^3.4.5",
+    "vscode": "^1.1.34"
   }
 }
