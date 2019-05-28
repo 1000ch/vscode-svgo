@@ -2,15 +2,6 @@ import * as vscode from 'vscode';
 import setText from 'vscode-set-text';
 import merge = require('lodash.merge');
 import SVGO = require('svgo');
-import SVGOConfig = require('svgo/lib/svgo/config');
-
-declare function SVGOConfig(config: {
-  full?: boolean;
-  datauri?: 'base64' | 'enc' | 'unenc';
-  svg2js?: object;
-  js2svg?: object;
-  plugins?: object[] | string[];
-}): SVGO.Options;
 
 const plugins: string[] = [
   'removeDoctype',
@@ -73,12 +64,8 @@ function getPluginConfig(): object[] {
 }
 
 function getConfig(config: SVGO.Options): SVGO.Options {
-  const { plugins } = SVGOConfig({
-    plugins: getPluginConfig()
-  });
-
   return merge({
-    plugins
+    plugins: getPluginConfig()
   }, config);
 }
 
