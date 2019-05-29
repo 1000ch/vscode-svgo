@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
+import { safeLoad } from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge = require('lodash.merge');
 import SVGO = require('svgo');
 
-const plugins: string[] = [
+const pluginNames: string[] = [
   'removeDoctype',
   'removeXMLProcInst',
   'removeComments',
@@ -53,20 +54,44 @@ const plugins: string[] = [
   'reusePaths'
 ];
 
-function getPluginConfig(): object[] {
-  const svgoConfig = vscode.workspace.getConfiguration('svgo');
+function isSVG({ languageId, fileName }: vscode.TextDocument): boolean {
+  return languageId === 'xml' && fileName.endsWith('.svg');
+}
 
-  return plugins.map(plugin => {
-    return {
-      [plugin]: svgoConfig.get<boolean>(plugin)
-    };
+function isYAML({ languageId }: vscode.TextDocument): boolean {
+  return languageId === 'yaml';
+}
+
+function getPluginConfig(): SVGO.Options {
+  const svgoConfig = vscode.workspace.getConfiguration('svgo');
+  const pluginConfig: SVGO.Options = {
+    plugins: pluginNames.map(pluginName => {
+      return {
+        [pluginName]: svgoConfig.get<boolean>(pluginName)
+      } as any;
+    })
+  };
+
+  return pluginConfig;
+}
+
+function getProjectConfig(): SVGO.Options {
+  const yaml = vscode.workspace.textDocuments.find(textDocument => {
+    return isYAML(textDocument) && textDocument.fileName === '.svgo.yml';
   });
+
+  if (yaml) {
+    return safeLoad(yaml.getText()) as SVGO.Options;
+  } else {
+    return {};
+  }
 }
 
 function getConfig(config: SVGO.Options): SVGO.Options {
-  return merge({
-    plugins: getPluginConfig()
-  }, config);
+  const pluginConfig = getPluginConfig();
+  const projectConfig = getProjectConfig();
+
+  return merge(pluginConfig, projectConfig, config);
 }
 
 async function optimize(text: string, config: SVGO.Options): Promise<string> {
@@ -106,55 +131,51 @@ const prettifyTextDocument = async (textDocument: vscode.TextDocument) => {
   await setText(text, textEditor);
 };
 
-function isSVG(document: vscode.TextDocument): boolean {
-  const { languageId, fileName } = document;
-
-  return languageId === 'xml' && fileName.endsWith('.svg');
-}
-
 function getFiles(): vscode.TextDocument[] {
   return vscode.workspace.textDocuments.filter(textDocument => {
     return isSVG(textDocument);
   });
 }
 
+async function minify() {
+  const { activeTextEditor } = vscode.window;
+
+  if (!activeTextEditor) {
+    return;
+  }
+
+  await minifyTextDocument(activeTextEditor.document);
+  await vscode.window.showInformationMessage('Minified current SVG file');
+}
+
+async function minifyAll() {
+  await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
+  await vscode.window.showInformationMessage('Minified all SVG files');
+}
+
+async function prettify() {
+  const { activeTextEditor } = vscode.window;
+
+  if (!activeTextEditor) {
+    return;
+  }
+
+  await prettifyTextDocument(activeTextEditor.document);
+  await vscode.window.showInformationMessage('Prettified current SVG file');
+}
+
+async function prettifyAll() {
+  await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
+  await vscode.window.showInformationMessage('Prettified all SVG files');
+}
+
 export function activate(context: vscode.ExtensionContext) {
-  const minify = vscode.commands.registerCommand('svgo.minify', async () => {
-    const { activeTextEditor } = vscode.window;
-
-    if (!activeTextEditor) {
-      return;
-    }
-
-    await minifyTextDocument(activeTextEditor.document);
-    await vscode.window.showInformationMessage('Minified current SVG file');
-  });
-
-  const minifyAll = vscode.commands.registerCommand('svgo.minify-all', async () => {
-    await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
-    await vscode.window.showInformationMessage('Minified all SVG files');
-  });
-
-  const prettify = vscode.commands.registerCommand('svgo.prettify', async () => {
-    const { activeTextEditor } = vscode.window;
-
-    if (!activeTextEditor) {
-      return;
-    }
-
-    await prettifyTextDocument(activeTextEditor.document);
-    await vscode.window.showInformationMessage('Prettified current SVG file');
-  });
-
-  const prettifyAll = vscode.commands.registerCommand('svgo.prettify-all', async () => {
-    await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
-    await vscode.window.showInformationMessage('Prettified all SVG files');
-  });
-
-  context.subscriptions.push(minify);
-  context.subscriptions.push(minifyAll);
-  context.subscriptions.push(prettify);
-  context.subscriptions.push(prettifyAll);
+  context.subscriptions.push(
+    vscode.commands.registerCommand('svgo.minify', minify),
+    vscode.commands.registerCommand('svgo.minify-all', minifyAll),
+    vscode.commands.registerCommand('svgo.prettify', prettify),
+    vscode.commands.registerCommand('svgo.prettify-all', prettifyAll)
+  );
 };
 
 export function deactivate() {}

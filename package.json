@@ -292,11 +292,13 @@
     ]
   },
   "dependencies": {
+    "js-yaml": "^3.13.1",
     "lodash.merge": "^4.6.1",
     "svgo": "^1.2.2",
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^3.12.1",
     "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^1.0.1",
     "terser": "^4.0.0",
