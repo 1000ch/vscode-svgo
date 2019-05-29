@@ -1,6 +1,6 @@
 # vscode-svgo
 
-Minify SVG with [SVGO](http://github.com/svg/svgo).
+Fully featured [SVGO](http://github.com/svg/svgo) plugin for [Visual Studio Code](https://github.com/microsoft/vscode).
 
 ## Install
 
@@ -8,7 +8,7 @@ Execute `Extensions: Install Extensions` command from [Command Palette](https://
 
 ## Usage
 
-In a SVG file, open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
+Open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
 
 ### Minify current SVG file
 
@@ -28,7 +28,13 @@ To prettify all SVG files in workspace.
 
 ## Config
 
-To enable/disable [plugins](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#3-plugins).
+### Extension config
+
+You can enable/disable [plugins](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#3-plugins) via [Configure Extension Settings](https://code.visualstudio.com/docs/editor/extension-gallery#_configuring-extensions).
+
+### Project config
+
+[To configure with `.svgo.yml`](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#1-config), just put the config file in project root.
 
 ## License
 

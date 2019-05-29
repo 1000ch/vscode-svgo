@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.4.0",
   "displayName": "svgo",
-  "description": "Minify SVG with SVGO",
+  "description": "Fully featured SVGO plugin for Visual Studio Code",
   "publisher": "1000ch",
   "author": "1000ch",
   "categories": [
