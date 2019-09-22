@@ -1,5 +1,8 @@
 # vscode-svgo
 
+[![Dependency Status](https://david-dm.org/1000ch/vscode-svgo.svg)](https://david-dm.org/1000ch/vscode-svgo)
+[![devDependency Status](https://david-dm.org/1000ch/vscode-svgo/dev-status.svg)](https://david-dm.org/1000ch/vscode-svgo?type=dev)
+
 Fully featured [SVGO](http://github.com/svg/svgo) plugin for [Visual Studio Code](https://github.com/microsoft/vscode).
 
 ## Install
