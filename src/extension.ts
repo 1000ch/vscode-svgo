@@ -131,7 +131,7 @@ const prettifyTextDocument = async (textDocument: vscode.TextDocument) => {
   await setText(text, textEditor);
 };
 
-function getFiles(): vscode.TextDocument[] {
+function getTextDocuments(): vscode.TextDocument[] {
   return vscode.workspace.textDocuments.filter(textDocument => {
     return isSVG(textDocument);
   });
@@ -149,7 +149,7 @@ async function minify() {
 }
 
 async function minifyAll() {
-  await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
+  await Promise.all(getTextDocuments().map(textDocument => minifyTextDocument(textDocument)));
   await vscode.window.showInformationMessage('Minified all SVG files');
 }
 
@@ -165,7 +165,7 @@ async function prettify() {
 }
 
 async function prettifyAll() {
-  await Promise.all(getFiles().map(textDocument => minifyTextDocument(textDocument)));
+  await Promise.all(getTextDocuments().map(textDocument => minifyTextDocument(textDocument)));
   await vscode.window.showInformationMessage('Prettified all SVG files');
 }
 
