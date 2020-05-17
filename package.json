@@ -298,11 +298,11 @@
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/js-yaml": "^3.12.1",
+    "@types/js-yaml": "^3.12.3",
     "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^1.3.0",
-    "terser": "^4.6.3",
-    "typescript": "^3.7.5",
-    "vscode": "^1.1.36"
+    "terser": "^4.7.0",
+    "typescript": "^3.9.3",
+    "vscode": "^1.1.37"
   }
 }
