@@ -1,7 +1,7 @@
 {
   "name": "svgo",
   "private": true,
-  "version": "1.4.2",
+  "version": "1.5.0",
   "displayName": "svgo",
   "description": "Fully featured SVGO plugin for Visual Studio Code",
   "publisher": "1000ch",
