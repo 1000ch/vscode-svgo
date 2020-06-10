@@ -1,8 +1,8 @@
 import { ExtensionContext, TextDocument, commands, window, workspace } from 'vscode';
 import { safeLoad } from 'js-yaml';
 import setText from 'vscode-set-text';
-import merge = require('lodash.merge');
-import SVGO = require('svgo');
+import merge from 'lodash.merge';
+import SVGO from 'svgo';
 
 const pluginNames: string[] = [
   'removeDoctype',
