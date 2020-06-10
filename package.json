@@ -30,6 +30,48 @@
   ],
   "main": "out/extension.js",
   "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "svgo.minify-all",
+          "group": "1_modification"
+        },
+        {
+          "command": "svgo.prettify-all",
+          "group": "1_modification"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceLangId == xml",
+          "command": "svgo.minify",
+          "group": "1_modification"
+        },
+        {
+          "when": "resourceLangId == xml",
+          "command": "svgo.prettify",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "svgo.minify",
+        "title": "Minify current SVG file"
+      },
+      {
+        "command": "svgo.minify-all",
+        "title": "Minify SVG files in workspace"
+      },
+      {
+        "command": "svgo.prettify",
+        "title": "Prettify current SVG file"
+      },
+      {
+        "command": "svgo.prettify-all",
+        "title": "Prettify SVG files in workspace"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "svgo configuration options",
@@ -270,25 +312,7 @@
           "description": "Find duplicated elements and replace them with links (disabled by default)"
         }
       }
-    },
-    "commands": [
-      {
-        "command": "svgo.minify",
-        "title": "Minify current SVG file"
-      },
-      {
-        "command": "svgo.minify-all",
-        "title": "Minify SVG files in workspace"
-      },
-      {
-        "command": "svgo.prettify",
-        "title": "Prettify current SVG file"
-      },
-      {
-        "command": "svgo.prettify-all",
-        "title": "Prettify SVG files in workspace"
-      }
-    ]
+    }
   },
   "dependencies": {
     "js-yaml": "^3.13.1",
