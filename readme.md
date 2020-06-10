@@ -13,21 +13,12 @@ Execute `Extensions: Install Extensions` command from [Command Palette](https://
 
 Open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
 
-### Minify current SVG file
+- **Minify current SVG file**: to minify current SVG file
+- **Minify SVG files in workspace**: to minify all SVG files in workspace
+- **Prettify current SVG file**: to prettify current SVG file
+- **Prettify SVG files in workspace**: to prettify all SVG files in workspace
 
-To minify current SVG file.
-
-### Minify SVG files in workspace
-
-To minify all SVG files in workspace.
-
-### Prettify current SVG file
-
-To prettify current SVG file.
-
-### Prettify SVG files in workspace
-
-To prettify all SVG files in workspace.
+You can also execute these commands from context menu of [Explorer](https://code.visualstudio.com/docs/getstarted/userinterface#_explorer) or Editor.
 
 ## Config
 
