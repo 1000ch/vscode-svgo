@@ -16,7 +16,7 @@
   "license": "MIT",
   "scripts": {
     "vscode:prepublish": "npm run build",
-    "build": "tsc -p . && terser --output out/extension.js -- out/extension.js"
+    "build": "tsc"
   },
   "engines": {
     "vscode": "^1.45.1"
@@ -297,11 +297,10 @@
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/js-yaml": "^3.12.3",
+    "@types/js-yaml": "^3.12.4",
     "@types/lodash.merge": "^4.6.6",
-    "@types/svgo": "^1.3.0",
+    "@types/svgo": "^1.3.3",
     "@types/vscode": "^1.45.1",
-    "terser": "^4.7.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   }
 }
