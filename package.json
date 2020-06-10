@@ -43,12 +43,12 @@
       ],
       "editor/context": [
         {
-          "when": "resourceLangId == xml",
+          "when": "resourceLangId == xml || editorLangId == xml",
           "command": "svgo.minify",
           "group": "1_modification"
         },
         {
-          "when": "resourceLangId == xml",
+          "when": "resourceLangId == xml || editorLangId == xml",
           "command": "svgo.prettify",
           "group": "1_modification"
         }
