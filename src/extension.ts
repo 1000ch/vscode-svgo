@@ -161,7 +161,7 @@ async function prettify() {
 }
 
 async function prettifyAll() {
-  await Promise.all(getTextDocuments().map(textDocument => minifyTextDocument(textDocument)));
+  await Promise.all(getTextDocuments().map(textDocument => prettifyTextDocument(textDocument)));
   await window.showInformationMessage('Prettified all SVG files');
 }
 
