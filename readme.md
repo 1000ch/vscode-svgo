@@ -20,6 +20,10 @@ Open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and sear
 
 You can also execute these commands from context menu of [Explorer](https://code.visualstudio.com/docs/getstarted/userinterface#_explorer) or Editor.
 
+![You can use commands from the context menu of editor view](./screenshot-1.png)
+
+![You can also use commands from the context menu of explorer view](./screenshot-2.png)
+
 ## Config
 
 ### Extension config
