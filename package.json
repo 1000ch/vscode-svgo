@@ -325,7 +325,7 @@
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/js-yaml": "^3.12.4",
+    "@types/js-yaml": "^3.12.5",
     "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^1.3.3",
     "@types/vscode": "^1.50.0",
