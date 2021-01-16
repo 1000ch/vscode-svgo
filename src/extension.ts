@@ -1,5 +1,5 @@
 import { ExtensionContext, TextDocument, commands, window, workspace } from 'vscode';
-import { safeLoad } from 'js-yaml';
+import jsyaml from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import SVGO from 'svgo';
@@ -81,7 +81,7 @@ function getProjectConfig(): SVGO.Options {
   });
 
   if (yaml) {
-    return safeLoad(yaml.getText()) as SVGO.Options;
+    return jsyaml.load(yaml.getText()) as SVGO.Options;
   } else {
     return {};
   }
