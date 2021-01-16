@@ -23,7 +23,7 @@
     "build": "tsc"
   },
   "engines": {
-    "vscode": "^1.46.0"
+    "vscode": "^1.52.0"
   },
   "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "activationEvents": [
