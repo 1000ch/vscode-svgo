@@ -2,9 +2,9 @@ import { ExtensionContext, TextDocument, commands, window, workspace } from 'vsc
 import { load } from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import { OptimizeOptions, optimize } from 'svgo';
+import { OptimizeOptions, Plugin, optimize, extendDefaultPlugins } from 'svgo';
 
-const pluginNames: string[] = [
+const defaultPlugins: Plugin[] = [
   'removeDoctype',
   'removeXMLProcInst',
   'removeComments',
@@ -64,13 +64,10 @@ function isYAML({ languageId }: TextDocument): boolean {
 
 function getPluginConfig(): OptimizeOptions {
   const svgoConfig = workspace.getConfiguration('svgo');
-  const pluginConfig: OptimizeOptions = {
-    plugins: pluginNames.map(pluginName => {
-      return {
-        [pluginName]: svgoConfig.get<boolean>(pluginName)
-      } as any;
-    })
-  };
+  const plugins = extendDefaultPlugins(defaultPlugins.filter(plugin => {
+    return svgoConfig.get(plugin as string);
+  }));
+  const pluginConfig: OptimizeOptions = { plugins };
 
   return pluginConfig;
 }
