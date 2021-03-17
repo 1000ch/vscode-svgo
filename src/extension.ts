@@ -1,5 +1,5 @@
 import { ExtensionContext, TextDocument, commands, window, workspace } from 'vscode';
-import { safeLoad } from 'js-yaml';
+import { load } from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import { OptimizeOptions, optimize } from 'svgo';
@@ -81,7 +81,7 @@ function getProjectConfig(): OptimizeOptions {
   });
 
   if (yaml) {
-    return safeLoad(yaml.getText()) as OptimizeOptions;
+    return load(yaml.getText()) as OptimizeOptions;
   } else {
     return {};
   }
