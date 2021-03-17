@@ -1,8 +1,8 @@
 import { ExtensionContext, TextDocument, commands, window, workspace } from 'vscode';
-import jsyaml from 'js-yaml';
+import { safeLoad } from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import SVGO from 'svgo';
+import { OptimizeOptions, optimize } from 'svgo';
 
 const pluginNames: string[] = [
   'removeDoctype',
@@ -62,9 +62,9 @@ function isYAML({ languageId }: TextDocument): boolean {
   return languageId === 'yaml';
 }
 
-function getPluginConfig(): SVGO.Options {
+function getPluginConfig(): OptimizeOptions {
   const svgoConfig = workspace.getConfiguration('svgo');
-  const pluginConfig: SVGO.Options = {
+  const pluginConfig: OptimizeOptions = {
     plugins: pluginNames.map(pluginName => {
       return {
         [pluginName]: svgoConfig.get<boolean>(pluginName)
@@ -75,30 +75,23 @@ function getPluginConfig(): SVGO.Options {
   return pluginConfig;
 }
 
-function getProjectConfig(): SVGO.Options {
+function getProjectConfig(): OptimizeOptions {
   const yaml = workspace.textDocuments.find(textDocument => {
     return isYAML(textDocument) && textDocument.fileName === '.svgo.yml';
   });
 
   if (yaml) {
-    return jsyaml.load(yaml.getText()) as SVGO.Options;
+    return safeLoad(yaml.getText()) as OptimizeOptions;
   } else {
     return {};
   }
 }
 
-function getConfig(config: SVGO.Options): SVGO.Options {
+function getConfig(config: OptimizeOptions): OptimizeOptions {
   const pluginConfig = getPluginConfig();
   const projectConfig = getProjectConfig();
 
   return merge(pluginConfig, projectConfig, config);
-}
-
-async function optimize(text: string, config: SVGO.Options): Promise<string> {
-  const svgo = new SVGO(config);
-  const { data } = await svgo.optimize(text);
-
-  return data;
 }
 
 const minifyTextDocument = async (textDocument: TextDocument) => {
@@ -111,9 +104,9 @@ const minifyTextDocument = async (textDocument: TextDocument) => {
       pretty: false
     }
   });
-  const text = await optimize(textDocument.getText(), config);
+  const { data } = await optimize(textDocument.getText(), config);
   const textEditor = await window.showTextDocument(textDocument);
-  await setText(text, textEditor);
+  await setText(data, textEditor);
 };
 
 const prettifyTextDocument = async (textDocument: TextDocument) => {
@@ -126,9 +119,9 @@ const prettifyTextDocument = async (textDocument: TextDocument) => {
       pretty: true
     }
   });
-  const text = await optimize(textDocument.getText(), config);
+  const { data } = await optimize(textDocument.getText(), config);
   const textEditor = await window.showTextDocument(textDocument);
-  await setText(text, textEditor);
+  await setText(data, textEditor);
 };
 
 function getTextDocuments(): TextDocument[] {
