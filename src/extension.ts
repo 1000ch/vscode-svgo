@@ -64,9 +64,12 @@ function isYAML({ languageId }: TextDocument): boolean {
 
 function getPluginConfig(): OptimizeOptions {
   const svgoConfig = workspace.getConfiguration('svgo');
-  const plugins = extendDefaultPlugins(defaultPlugins.filter(plugin => {
-    return svgoConfig.get(plugin as string);
-  }));
+  const plugins = extendDefaultPlugins(defaultPlugins.map(plugin => (
+    {
+      name: plugin,
+      active: svgoConfig.get<boolean>(plugin as string)
+    } as any
+  )));
   const pluginConfig: OptimizeOptions = { plugins };
 
   return pluginConfig;
