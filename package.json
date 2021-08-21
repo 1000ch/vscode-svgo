@@ -321,7 +321,7 @@
   "dependencies": {
     "js-yaml": "^4.0.0",
     "lodash.merge": "^4.6.2",
-    "svgo": "^2.3.0",
+    "svgo": "^2.4.0",
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
