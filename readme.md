@@ -1,5 +1,6 @@
 # vscode-svgo
 
+![GitHub Actions Status](https://github.com/1000ch/vscode-svgo/workflows/test/badge.svg?branch=master)
 [![Dependency Status](https://david-dm.org/1000ch/vscode-svgo.svg)](https://david-dm.org/1000ch/vscode-svgo)
 [![devDependency Status](https://david-dm.org/1000ch/vscode-svgo/dev-status.svg)](https://david-dm.org/1000ch/vscode-svgo?type=dev)
 
