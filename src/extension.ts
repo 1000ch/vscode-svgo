@@ -2,7 +2,7 @@ import { ExtensionContext, TextDocument, commands, window, workspace } from 'vsc
 import { load } from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import { OptimizeOptions, DefaultPlugins, optimize, extendDefaultPlugins } from 'svgo';
+import { OptimizeOptions, DefaultPlugins, Plugin, optimize } from 'svgo';
 
 const defaultPlugins: DefaultPlugins['name'][] = [
   'removeDoctype',
@@ -64,7 +64,24 @@ function isYAML({ languageId }: TextDocument): boolean {
 
 function getPluginConfig(): OptimizeOptions {
   const svgoConfig = workspace.getConfiguration('svgo');
-  const plugins = extendDefaultPlugins(defaultPlugins.filter(p => svgoConfig.get(p)));
+
+  // Use 'preset-default' plugin to override defaults
+  // https://github.com/svg/svgo#configuration
+  const defaultPlugin: Plugin = {
+    name: 'preset-default',
+    params: {}
+  };
+
+  for (const plugin of defaultPlugins) {
+    // if plugin is configured by workspace config
+    if (!svgoConfig.has(plugin)) {
+      continue;
+    }
+
+    defaultPlugin.params[plugin] = svgoConfig.get<boolean>(plugin);
+  }
+
+  const plugins: Plugin[] = [defaultPlugin];
   const pluginConfig: OptimizeOptions = { plugins };
 
   return pluginConfig;
