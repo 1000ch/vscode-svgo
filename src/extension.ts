@@ -1,8 +1,7 @@
 import {ExtensionContext, TextDocument, commands, window, workspace} from 'vscode';
-import {load} from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import {OptimizeOptions, DefaultPlugins, Plugin, optimize} from 'svgo';
+import {OptimizeOptions, DefaultPlugins, Plugin, loadConfig, optimize} from 'svgo';
 
 const defaultPlugins: Array<DefaultPlugins['name']> = [
   'removeDoctype',
@@ -58,10 +57,6 @@ function isSVG({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
-function isYAML({languageId}: TextDocument): boolean {
-  return languageId === 'yaml';
-}
-
 function getPluginConfig(): OptimizeOptions {
   const svgoConfig = workspace.getConfiguration('svgo');
 
@@ -87,19 +82,16 @@ function getPluginConfig(): OptimizeOptions {
   return pluginConfig;
 }
 
-function getProjectConfig(): OptimizeOptions {
-  const yaml = workspace.textDocuments.find(textDocument => isYAML(textDocument) && textDocument.fileName === '.svgo.yml');
+async function getProjectConfig(): Promise<OptimizeOptions> {
+  const configFile = workspace.textDocuments.find(({fileName}) => fileName === 'svgo.config.js');
+  const projectConfig = await loadConfig(configFile?.fileName) ?? {};
 
-  if (yaml) {
-    return load(yaml.getText()) as OptimizeOptions;
-  }
-
-  return {};
+  return projectConfig;
 }
 
-function getConfig(config: OptimizeOptions): OptimizeOptions {
+async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
   const pluginConfig = getPluginConfig();
-  const projectConfig = getProjectConfig();
+  const projectConfig = await getProjectConfig();
 
   return merge(pluginConfig, projectConfig, config);
 }
@@ -109,7 +101,7 @@ const minifyTextDocument = async (textDocument: TextDocument) => {
     return;
   }
 
-  const config = getConfig({
+  const config = await getConfig({
     js2svg: {
       pretty: false,
     },
@@ -124,7 +116,7 @@ const prettifyTextDocument = async (textDocument: TextDocument) => {
     return;
   }
 
-  const config = getConfig({
+  const config = await getConfig({
     js2svg: {
       pretty: true,
     },

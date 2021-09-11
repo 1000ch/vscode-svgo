@@ -33,7 +33,7 @@ You can enable/disable [plugins](https://github.com/svg/svgo/blob/master/docs/ho
 
 ### Project config
 
-[To configure with `.svgo.yml`](https://github.com/svg/svgo/blob/master/docs/how-it-works/en.md#1-config), just put the config file in project root.
+[To configure with `svgo.config.js`](https://github.com/svg/svgo#configuration), just put the config file in project root.
 
 ## License
 
