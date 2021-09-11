@@ -1,10 +1,10 @@
-import { ExtensionContext, TextDocument, commands, window, workspace } from 'vscode';
-import { load } from 'js-yaml';
+import {ExtensionContext, TextDocument, commands, window, workspace} from 'vscode';
+import {load} from 'js-yaml';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import { OptimizeOptions, DefaultPlugins, Plugin, optimize } from 'svgo';
+import {OptimizeOptions, DefaultPlugins, Plugin, optimize} from 'svgo';
 
-const defaultPlugins: DefaultPlugins['name'][] = [
+const defaultPlugins: Array<DefaultPlugins['name']> = [
   'removeDoctype',
   'removeXMLProcInst',
   'removeComments',
@@ -51,14 +51,14 @@ const defaultPlugins: DefaultPlugins['name'][] = [
   'removeScriptElement',
   'addAttributesToSVGElement',
   'removeOffCanvasPaths',
-  'reusePaths'
+  'reusePaths',
 ];
 
-function isSVG({ languageId, fileName }: TextDocument): boolean {
+function isSVG({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
-function isYAML({ languageId }: TextDocument): boolean {
+function isYAML({languageId}: TextDocument): boolean {
   return languageId === 'yaml';
 }
 
@@ -69,11 +69,11 @@ function getPluginConfig(): OptimizeOptions {
   // https://github.com/svg/svgo#configuration
   const defaultPlugin: Plugin = {
     name: 'preset-default',
-    params: {}
+    params: {},
   };
 
   for (const plugin of defaultPlugins) {
-    // if plugin is configured by workspace config
+    // If plugin is configured by workspace config
     if (!svgoConfig.has(plugin)) {
       continue;
     }
@@ -82,21 +82,19 @@ function getPluginConfig(): OptimizeOptions {
   }
 
   const plugins: Plugin[] = [defaultPlugin];
-  const pluginConfig: OptimizeOptions = { plugins };
+  const pluginConfig: OptimizeOptions = {plugins};
 
   return pluginConfig;
 }
 
 function getProjectConfig(): OptimizeOptions {
-  const yaml = workspace.textDocuments.find(textDocument => {
-    return isYAML(textDocument) && textDocument.fileName === '.svgo.yml';
-  });
+  const yaml = workspace.textDocuments.find(textDocument => isYAML(textDocument) && textDocument.fileName === '.svgo.yml');
 
   if (yaml) {
     return load(yaml.getText()) as OptimizeOptions;
-  } else {
-    return {};
   }
+
+  return {};
 }
 
 function getConfig(config: OptimizeOptions): OptimizeOptions {
@@ -113,10 +111,10 @@ const minifyTextDocument = async (textDocument: TextDocument) => {
 
   const config = getConfig({
     js2svg: {
-      pretty: false
-    }
+      pretty: false,
+    },
   });
-  const { data } = await optimize(textDocument.getText(), config);
+  const {data} = optimize(textDocument.getText(), config);
   const textEditor = await window.showTextDocument(textDocument);
   await setText(data, textEditor);
 };
@@ -128,18 +126,16 @@ const prettifyTextDocument = async (textDocument: TextDocument) => {
 
   const config = getConfig({
     js2svg: {
-      pretty: true
-    }
+      pretty: true,
+    },
   });
-  const { data } = await optimize(textDocument.getText(), config);
+  const {data} = optimize(textDocument.getText(), config);
   const textEditor = await window.showTextDocument(textDocument);
   await setText(data, textEditor);
 };
 
 function getTextDocuments(): TextDocument[] {
-  return workspace.textDocuments.filter(textDocument => {
-    return isSVG(textDocument);
-  });
+  return workspace.textDocuments.filter(textDocument => isSVG(textDocument));
 }
 
 async function minify() {
@@ -152,7 +148,7 @@ async function minify() {
 }
 
 async function minifyAll() {
-  await Promise.all(getTextDocuments().map(textDocument => minifyTextDocument(textDocument)));
+  await Promise.all(getTextDocuments().map(async textDocument => minifyTextDocument(textDocument)));
   await window.showInformationMessage('Minified all SVG files');
 }
 
@@ -166,7 +162,7 @@ async function prettify() {
 }
 
 async function prettifyAll() {
-  await Promise.all(getTextDocuments().map(textDocument => prettifyTextDocument(textDocument)));
+  await Promise.all(getTextDocuments().map(async textDocument => prettifyTextDocument(textDocument)));
   await window.showInformationMessage('Prettified all SVG files');
 }
 
@@ -175,8 +171,9 @@ export function activate(context: ExtensionContext) {
     commands.registerCommand('svgo.minify', minify),
     commands.registerCommand('svgo.minify-all', minifyAll),
     commands.registerCommand('svgo.prettify', prettify),
-    commands.registerCommand('svgo.prettify-all', prettifyAll)
+    commands.registerCommand('svgo.prettify-all', prettifyAll),
   );
-};
+}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function deactivate() {}

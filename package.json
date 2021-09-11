@@ -1,63 +1,30 @@
 {
   "name": "svgo",
-  "private": true,
-  "version": "2.2.0",
   "displayName": "svgo",
+  "version": "2.2.0",
+  "private": true,
   "description": "Fully featured SVGO plugin for Visual Studio Code",
-  "publisher": "1000ch",
+  "categories": [
+    "Formatters"
+  ],
+  "homepage": "https://github.com/1000ch/vscode-svgo#readme",
+  "bugs": "https://github.com/1000ch/vscode-svgo/issues",
+  "repository": "https://github.com/1000ch/vscode-svgo",
+  "license": "MIT",
+  "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
   "author": {
     "name": "Shogo Sensui",
     "email": "shogosensui@gmail.com",
     "web": "https://github.com/1000ch"
   },
-  "categories": [
-    "Formatters"
-  ],
-  "icon": "img/icon.png",
-  "repository": "https://github.com/1000ch/vscode-svgo",
-  "homepage": "https://github.com/1000ch/vscode-svgo#readme",
-  "bugs": "https://github.com/1000ch/vscode-svgo/issues",
-  "license": "MIT",
+  "publisher": "1000ch",
+  "main": "out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run build",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "xo"
   },
-  "engines": {
-    "vscode": "^1.60.0"
-  },
-  "qna": "https://stackoverflow.com/questions/tagged/vscode+svgo",
-  "activationEvents": [
-    "onCommand:svgo.minify",
-    "onCommand:svgo.minify-all",
-    "onCommand:svgo.prettify",
-    "onCommand:svgo.prettify-all"
-  ],
-  "main": "out/extension.js",
   "contributes": {
-    "menus": {
-      "explorer/context": [
-        {
-          "command": "svgo.minify-all",
-          "group": "1_modification"
-        },
-        {
-          "command": "svgo.prettify-all",
-          "group": "1_modification"
-        }
-      ],
-      "editor/context": [
-        {
-          "when": "resourceLangId == xml || editorLangId == xml",
-          "command": "svgo.minify",
-          "group": "1_modification"
-        },
-        {
-          "when": "resourceLangId == xml || editorLangId == xml",
-          "command": "svgo.prettify",
-          "group": "1_modification"
-        }
-      ]
-    },
     "commands": [
       {
         "command": "svgo.minify",
@@ -316,7 +283,40 @@
           "description": "Find duplicated elements and replace them with links (disabled by default)"
         }
       }
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "svgo.minify-all",
+          "group": "1_modification"
+        },
+        {
+          "command": "svgo.prettify-all",
+          "group": "1_modification"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceLangId == xml || editorLangId == xml",
+          "command": "svgo.minify",
+          "group": "1_modification"
+        },
+        {
+          "when": "resourceLangId == xml || editorLangId == xml",
+          "command": "svgo.prettify",
+          "group": "1_modification"
+        }
+      ]
     }
+  },
+  "activationEvents": [
+    "onCommand:svgo.minify",
+    "onCommand:svgo.minify-all",
+    "onCommand:svgo.prettify",
+    "onCommand:svgo.prettify-all"
+  ],
+  "xo": {
+    "space": 2
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
@@ -329,6 +329,11 @@
     "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^2.4.1",
     "@types/vscode": "^1.60.0",
-    "typescript": "^4.4.3"
-  }
+    "typescript": "^4.4.3",
+    "xo": "^0.44.0"
+  },
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "icon": "img/icon.png"
 }
