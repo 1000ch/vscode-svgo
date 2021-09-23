@@ -10,6 +10,12 @@ Fully featured [SVGO](http://github.com/svg/svgo) plugin for [Visual Studio Code
 
 Execute `Extensions: Install Extensions` command from [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search by **svgo**.
 
+Also you can install this extension locally by putting symbolic link from `~/.vscode/extensions` to `~/path/to/this/repo` like below.
+
+```bash
+$ ln -s ~/workspace/github.com/1000ch/vscode-svgo  ~/.vscode/extensions/1000ch.svgo-local
+```
+
 ## Usage
 
 Open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
