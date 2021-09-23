@@ -64,7 +64,9 @@ function getPluginConfig(): OptimizeOptions {
   // https://github.com/svg/svgo#configuration
   const defaultPlugin: Plugin = {
     name: 'preset-default',
-    params: {},
+    params: {
+      overrides: {},
+    },
   };
 
   for (const plugin of defaultPlugins) {
@@ -73,7 +75,7 @@ function getPluginConfig(): OptimizeOptions {
       continue;
     }
 
-    defaultPlugin.params[plugin] = svgoConfig.get<boolean>(plugin);
+    defaultPlugin.params.overrides[plugin] = svgoConfig.get<boolean>(plugin);
   }
 
   const plugins: Plugin[] = [defaultPlugin];
