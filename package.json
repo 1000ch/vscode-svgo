@@ -28,19 +28,19 @@
     "commands": [
       {
         "command": "svgo.minify",
-        "title": "Minify current SVG file"
+        "title": "svgo: Minify current SVG file"
       },
       {
         "command": "svgo.minify-all",
-        "title": "Minify SVG files in workspace"
+        "title": "svgo: Minify SVG files in workspace"
       },
       {
         "command": "svgo.prettify",
-        "title": "Prettify current SVG file"
+        "title": "svgo: Prettify current SVG file"
       },
       {
         "command": "svgo.prettify-all",
-        "title": "Prettify SVG files in workspace"
+        "title": "svgo: Prettify SVG files in workspace"
       }
     ],
     "configuration": {
