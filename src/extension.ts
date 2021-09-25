@@ -114,32 +114,13 @@ async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
   return merge(pluginConfig, projectConfig, config);
 }
 
-const minifyTextDocument = async (textDocument: TextDocument) => {
+const processTextDocument = async (textDocument: TextDocument, config?: OptimizeOptions) => {
   if (!isSVG(textDocument)) {
     return;
   }
 
-  const config = await getConfig({
-    js2svg: {
-      pretty: false,
-    },
-  });
-  const {data} = optimize(textDocument.getText(), config);
-  const textEditor = await window.showTextDocument(textDocument);
-  await setText(data, textEditor);
-};
-
-const formatTextDocument = async (textDocument: TextDocument) => {
-  if (!isSVG(textDocument)) {
-    return;
-  }
-
-  const config = await getConfig({
-    js2svg: {
-      pretty: true,
-    },
-  });
-  const {data} = optimize(textDocument.getText(), config);
+  const mergedConfig = await getConfig(config);
+  const {data} = optimize(textDocument.getText(), mergedConfig);
   const textEditor = await window.showTextDocument(textDocument);
   await setText(data, textEditor);
 };
@@ -149,7 +130,11 @@ async function minify() {
     return;
   }
 
-  await minifyTextDocument(window.activeTextEditor.document);
+  await processTextDocument(window.activeTextEditor.document, {
+    js2svg: {
+      pretty: false,
+    },
+  });
   await window.showInformationMessage('Minified current SVG file');
 }
 
@@ -158,7 +143,11 @@ async function format() {
     return;
   }
 
-  await formatTextDocument(window.activeTextEditor.document);
+  await processTextDocument(window.activeTextEditor.document, {
+    js2svg: {
+      pretty: true,
+    },
+  });
   await window.showInformationMessage('Prettified current SVG file');
 }
 
