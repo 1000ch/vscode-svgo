@@ -1,4 +1,5 @@
-import {ExtensionContext, TextDocument, commands, window, workspace} from 'vscode';
+import {Uri, FileType, commands, window, workspace} from 'vscode';
+import type {ExtensionContext, TextDocument} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import {OptimizeOptions, DefaultPlugins, Plugin, loadConfig, optimize} from 'svgo';
@@ -85,10 +86,25 @@ function getPluginConfig(): OptimizeOptions {
 }
 
 async function getProjectConfig(): Promise<OptimizeOptions> {
-  const configFile = workspace.textDocuments.find(({fileName}) => fileName === 'svgo.config.js');
-  const projectConfig = await loadConfig(configFile?.fileName) ?? {};
+  const workspaceFolder = workspace.workspaceFolders[0];
+  if (!workspaceFolder?.uri) {
+    return {};
+  }
 
-  return projectConfig;
+  try {
+    const configFile = Uri.parse(`${workspaceFolder?.uri.fsPath}/svgo.config.js`);
+    const stats = await workspace.fs.stat(configFile);
+    if (stats.type !== FileType.File) {
+      return {};
+    }
+
+    const projectConfig = await loadConfig(configFile.fsPath);
+    return projectConfig;
+  } catch (error: unknown) {
+    console.error(error);
+  }
+
+  return {};
 }
 
 async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
