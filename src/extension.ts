@@ -129,7 +129,7 @@ const minifyTextDocument = async (textDocument: TextDocument) => {
   await setText(data, textEditor);
 };
 
-const prettifyTextDocument = async (textDocument: TextDocument) => {
+const formatTextDocument = async (textDocument: TextDocument) => {
   if (!isSVG(textDocument)) {
     return;
   }
@@ -153,19 +153,19 @@ async function minify() {
   await window.showInformationMessage('Minified current SVG file');
 }
 
-async function prettify() {
+async function format() {
   if (!window.activeTextEditor) {
     return;
   }
 
-  await prettifyTextDocument(window.activeTextEditor.document);
+  await formatTextDocument(window.activeTextEditor.document);
   await window.showInformationMessage('Prettified current SVG file');
 }
 
 export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand('svgo.minify', minify),
-    commands.registerCommand('svgo.prettify', prettify),
+    commands.registerCommand('svgo.format', format),
   );
 }
 

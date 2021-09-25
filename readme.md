@@ -21,7 +21,7 @@ $ ln -s ~/workspace/github.com/1000ch/vscode-svgo  ~/.vscode/extensions/1000ch.s
 Open the Command Palette (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd>) and search following commands.
 
 - **svgo: Minify current SVG file**: to minify current SVG file
-- **svgo: Prettify current SVG file**: to prettify current SVG file
+- **svgo: Format current SVG file**: to format current SVG file
 
 You can also execute these commands from context menu of [Explorer](https://code.visualstudio.com/docs/getstarted/userinterface#_explorer) or Editor.
 

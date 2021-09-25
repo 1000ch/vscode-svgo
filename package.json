@@ -31,8 +31,8 @@
         "title": "svgo: Minify current SVG file"
       },
       {
-        "command": "svgo.prettify",
-        "title": "svgo: Prettify current SVG file"
+        "command": "svgo.format",
+        "title": "svgo: Format current SVG file"
       }
     ],
     "configuration": {
@@ -285,7 +285,7 @@
         },
         {
           "when": "resourceLangId == xml || editorLangId == xml",
-          "command": "svgo.prettify",
+          "command": "svgo.format",
           "group": "1_modification"
         }
       ]
@@ -293,7 +293,7 @@
   },
   "activationEvents": [
     "onCommand:svgo.minify",
-    "onCommand:svgo.prettify"
+    "onCommand:svgo.format"
   ],
   "xo": {
     "space": 2
