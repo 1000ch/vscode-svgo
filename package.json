@@ -31,16 +31,8 @@
         "title": "svgo: Minify current SVG file"
       },
       {
-        "command": "svgo.minify-all",
-        "title": "svgo: Minify SVG files in workspace"
-      },
-      {
         "command": "svgo.prettify",
         "title": "svgo: Prettify current SVG file"
-      },
-      {
-        "command": "svgo.prettify-all",
-        "title": "svgo: Prettify SVG files in workspace"
       }
     ],
     "configuration": {
@@ -285,16 +277,6 @@
       }
     },
     "menus": {
-      "explorer/context": [
-        {
-          "command": "svgo.minify-all",
-          "group": "1_modification"
-        },
-        {
-          "command": "svgo.prettify-all",
-          "group": "1_modification"
-        }
-      ],
       "editor/context": [
         {
           "when": "resourceLangId == xml || editorLangId == xml",
@@ -311,9 +293,7 @@
   },
   "activationEvents": [
     "onCommand:svgo.minify",
-    "onCommand:svgo.minify-all",
-    "onCommand:svgo.prettify",
-    "onCommand:svgo.prettify-all"
+    "onCommand:svgo.prettify"
   ],
   "xo": {
     "space": 2

@@ -144,10 +144,6 @@ const prettifyTextDocument = async (textDocument: TextDocument) => {
   await setText(data, textEditor);
 };
 
-function getTextDocuments(): TextDocument[] {
-  return workspace.textDocuments.filter(textDocument => isSVG(textDocument));
-}
-
 async function minify() {
   if (!window.activeTextEditor) {
     return;
@@ -155,11 +151,6 @@ async function minify() {
 
   await minifyTextDocument(window.activeTextEditor.document);
   await window.showInformationMessage('Minified current SVG file');
-}
-
-async function minifyAll() {
-  await Promise.all(getTextDocuments().map(async textDocument => minifyTextDocument(textDocument)));
-  await window.showInformationMessage('Minified all SVG files');
 }
 
 async function prettify() {
@@ -171,17 +162,10 @@ async function prettify() {
   await window.showInformationMessage('Prettified current SVG file');
 }
 
-async function prettifyAll() {
-  await Promise.all(getTextDocuments().map(async textDocument => prettifyTextDocument(textDocument)));
-  await window.showInformationMessage('Prettified all SVG files');
-}
-
 export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand('svgo.minify', minify),
-    commands.registerCommand('svgo.minify-all', minifyAll),
     commands.registerCommand('svgo.prettify', prettify),
-    commands.registerCommand('svgo.prettify-all', prettifyAll),
   );
 }
 
