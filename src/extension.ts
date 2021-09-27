@@ -1,5 +1,5 @@
 import {Uri, FileType, commands, window, workspace} from 'vscode';
-import type {ExtensionContext, TextDocument} from 'vscode';
+import type {ExtensionContext, TextDocument, TextEditor} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import {OptimizeOptions, DefaultPlugins, Plugin, loadConfig, optimize} from 'svgo';
@@ -114,28 +114,38 @@ async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
   return merge(pluginConfig, projectConfig, config);
 }
 
-const processTextDocument = async (textDocument: TextDocument, config?: OptimizeOptions) => {
-  if (!isSVG(textDocument)) {
+async function processTextEditor(textEditor: TextEditor, config?: OptimizeOptions) {
+  if (!isSVG(textEditor.document)) {
     return;
   }
 
   const mergedConfig = await getConfig(config);
-  const {data} = optimize(textDocument.getText(), mergedConfig);
-  const textEditor = await window.showTextDocument(textDocument);
+  const text = textEditor.document.getText();
+  const {data} = optimize(text, mergedConfig);
   await setText(data, textEditor);
-};
+}
 
 async function minify() {
   if (!window.activeTextEditor) {
     return;
   }
 
-  await processTextDocument(window.activeTextEditor.document, {
+  const config: OptimizeOptions = {
     js2svg: {
       pretty: false,
     },
-  });
-  await window.showInformationMessage('Minified current SVG file');
+  };
+
+  try {
+    await processTextEditor(window.activeTextEditor, config);
+    await window.showInformationMessage('Minified current SVG file');
+  } catch (error: unknown) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      await window.showErrorMessage(error.message);
+    }
+  }
 }
 
 async function format() {
@@ -143,12 +153,22 @@ async function format() {
     return;
   }
 
-  await processTextDocument(window.activeTextEditor.document, {
+  const config: OptimizeOptions = {
     js2svg: {
       pretty: true,
     },
-  });
-  await window.showInformationMessage('Prettified current SVG file');
+  };
+
+  try {
+    await processTextEditor(window.activeTextEditor, config);
+    await window.showInformationMessage('Prettified current SVG file');
+  } catch (error: unknown) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      await window.showErrorMessage(error.message);
+    }
+  }
 }
 
 export function activate(context: ExtensionContext) {
