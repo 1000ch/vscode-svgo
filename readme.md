@@ -27,8 +27,6 @@ You can also execute these commands from context menu of [Explorer](https://code
 
 ![You can use commands from the context menu of editor view](./screenshot-1.png)
 
-![You can also use commands from the context menu of explorer view](./screenshot-2.png)
-
 ## Config
 
 ### Extension config
