@@ -54,7 +54,7 @@ const defaultPlugins: Array<DefaultPlugins['name']> = [
   'reusePaths',
 ];
 
-function isSVG({languageId, fileName}: TextDocument): boolean {
+function isSvg({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
@@ -115,7 +115,7 @@ async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
 }
 
 async function processTextEditor(textEditor: TextEditor, config?: OptimizeOptions) {
-  if (!isSVG(textEditor.document)) {
+  if (!isSvg(textEditor.document)) {
     return;
   }
 
