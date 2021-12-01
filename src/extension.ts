@@ -2,7 +2,8 @@ import {Uri, FileType, commands, window, workspace} from 'vscode';
 import type {ExtensionContext, TextDocument, TextEditor} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import {OptimizeOptions, DefaultPlugins, Plugin, loadConfig, optimize} from 'svgo';
+import {loadConfig, optimize} from 'svgo';
+import type {OptimizeOptions, DefaultPlugins, Plugin} from 'svgo';
 
 const defaultPlugins: Array<DefaultPlugins['name']> = [
   'removeDoctype',
