@@ -306,12 +306,12 @@
   "devDependencies": {
     "@types/lodash.merge": "^4.6.6",
     "@types/svgo": "^2.6.0",
-    "@types/vscode": "^1.62.0",
-    "typescript": "^4.4.3",
-    "xo": "^0.46.4"
+    "@types/vscode": "^1.62.1",
+    "typescript": "^4.5.4",
+    "xo": "^0.47.0"
   },
   "engines": {
-    "vscode": "^1.62.0"
+    "vscode": "^1.62.1"
   },
   "icon": "img/icon.png"
 }
