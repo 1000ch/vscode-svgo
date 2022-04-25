@@ -304,7 +304,7 @@
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.6",
+    "@types/lodash.merge": "^4.6.7",
     "@types/svgo": "^2.6.0",
     "@types/vscode": "^1.62.1",
     "typescript": "^4.5.4",
