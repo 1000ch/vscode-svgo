@@ -308,7 +308,7 @@
     "@types/svgo": "^2.6.0",
     "@types/vscode": "^1.62.1",
     "typescript": "^4.5.4",
-    "xo": "^0.47.0"
+    "xo": "^0.49.0"
   },
   "engines": {
     "vscode": "^1.62.1"
