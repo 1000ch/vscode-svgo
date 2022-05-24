@@ -304,14 +304,14 @@
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.6",
-    "@types/svgo": "^2.6.0",
-    "@types/vscode": "^1.62.1",
-    "typescript": "^4.5.4",
-    "xo": "^0.47.0"
+    "@types/lodash.merge": "^4.6.7",
+    "@types/svgo": "^2.6.3",
+    "@types/vscode": "^1.67.0",
+    "typescript": "^4.6.4",
+    "xo": "^0.49.0"
   },
   "engines": {
-    "vscode": "^1.62.1"
+    "vscode": "^1.67.0"
   },
   "icon": "img/icon.png"
 }
