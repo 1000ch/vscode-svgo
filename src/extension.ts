@@ -3,7 +3,7 @@ import type {ExtensionContext, TextDocument, TextEditor} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import {loadConfig, optimize} from 'svgo';
-import type {OptimizeOptions, DefaultPlugins, Plugin} from 'svgo';
+import type {OptimizeOptions, OptimizedSvg, DefaultPlugins, Plugin} from 'svgo';
 
 const defaultPlugins: Array<DefaultPlugins['name']> = [
   'removeDoctype',
@@ -122,7 +122,13 @@ async function processTextEditor(textEditor: TextEditor, config?: OptimizeOption
 
   const mergedConfig = await getConfig(config);
   const text = textEditor.document.getText();
-  const {data} = optimize(text, mergedConfig);
+  const result = optimize(text, mergedConfig);
+  if (result.modernError) {
+    console.error(result.modernError);
+    throw result.modernError.message;
+  }
+
+  const {data} = result as OptimizedSvg;
   await setText(data, textEditor);
 }
 
