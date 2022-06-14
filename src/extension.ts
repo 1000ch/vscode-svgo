@@ -125,7 +125,7 @@ async function processTextEditor(textEditor: TextEditor, config?: OptimizeOption
   const result = optimize(text, mergedConfig);
   if (result.modernError) {
     console.error(result.modernError);
-    throw result.modernError.message;
+    throw new Error(result.modernError.message);
   }
 
   const {data} = result as OptimizedSvg;
