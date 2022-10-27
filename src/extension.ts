@@ -3,9 +3,9 @@ import type {ExtensionContext, TextDocument, TextEditor} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
 import {loadConfig, optimize} from 'svgo';
-import type {OptimizeOptions, OptimizedSvg, DefaultPlugins, Plugin} from 'svgo';
+import type {Config, DefaultPlugin, Output, PluginConfig} from 'svgo';
 
-const defaultPlugins: Array<DefaultPlugins['name']> = [
+const defaultPlugins: Array<DefaultPlugin['name']> = [
   'removeDoctype',
   'removeXMLProcInst',
   'removeComments',
@@ -59,12 +59,12 @@ function isSvg({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
-function getPluginConfig(): OptimizeOptions {
+function getPluginConfig(): Config {
   const svgoConfig = workspace.getConfiguration('svgo');
 
   // Use 'preset-default' plugin to override defaults
   // https://github.com/svg/svgo#configuration
-  const defaultPlugin: Plugin = {
+  const defaultPlugin: PluginConfig = {
     name: 'preset-default',
     params: {
       overrides: {},
@@ -80,13 +80,13 @@ function getPluginConfig(): OptimizeOptions {
     defaultPlugin.params.overrides[plugin] = svgoConfig.get<boolean>(plugin);
   }
 
-  const plugins: Plugin[] = [defaultPlugin];
-  const pluginConfig: OptimizeOptions = {plugins};
+  const plugins: PluginConfig[] = [defaultPlugin];
+  const pluginConfig: Config = {plugins};
 
   return pluginConfig;
 }
 
-async function getProjectConfig(): Promise<OptimizeOptions> {
+async function getProjectConfig(): Promise<Config> {
   const workspaceFolder = workspace.workspaceFolders[0];
   if (!workspaceFolder?.uri) {
     return {};
@@ -108,27 +108,21 @@ async function getProjectConfig(): Promise<OptimizeOptions> {
   return {};
 }
 
-async function getConfig(config: OptimizeOptions): Promise<OptimizeOptions> {
+async function getConfig(config: Config): Promise<Config> {
   const pluginConfig = getPluginConfig();
   const projectConfig = await getProjectConfig();
 
   return merge(pluginConfig, projectConfig, config);
 }
 
-async function processTextEditor(textEditor: TextEditor, config?: OptimizeOptions) {
+async function processTextEditor(textEditor: TextEditor, config?: Config) {
   if (!isSvg(textEditor.document)) {
     return;
   }
 
   const mergedConfig = await getConfig(config);
   const text = textEditor.document.getText();
-  const result = optimize(text, mergedConfig);
-  if (result.modernError) {
-    console.error(result.modernError);
-    throw new Error(result.modernError.message);
-  }
-
-  const {data} = result as OptimizedSvg;
+  const {data}: Output = optimize(text, mergedConfig);
   await setText(data, textEditor);
 }
 
@@ -137,7 +131,7 @@ async function minify() {
     return;
   }
 
-  const config: OptimizeOptions = {
+  const config: Config = {
     js2svg: {
       pretty: false,
     },
@@ -160,7 +154,7 @@ async function format() {
     return;
   }
 
-  const config: OptimizeOptions = {
+  const config: Config = {
     js2svg: {
       pretty: true,
     },
