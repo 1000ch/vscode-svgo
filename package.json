@@ -300,17 +300,17 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "svgo": "^3.0.0",
+    "svgo": "^4.0.0-rc.0",
     "vscode-set-text": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.7",
-    "@types/vscode": "^1.82.0",
-    "typescript": "^5.2.2",
-    "xo": "^0.56.0"
+    "@types/lodash.merge": "^4.6.9",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.5",
+    "xo": "^0.58.0"
   },
   "engines": {
-    "vscode": "^1.82.0"
+    "vscode": "^1.90.0"
   },
   "icon": "img/icon.png"
 }

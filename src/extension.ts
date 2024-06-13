@@ -1,59 +1,23 @@
-import {Uri, FileType, commands, window, workspace} from 'vscode';
-import type {ExtensionContext, TextDocument, TextEditor} from 'vscode';
+import {
+  Uri,
+  FileType,
+  commands,
+  window,
+  workspace,
+  type ExtensionContext,
+  type TextDocument,
+  type TextEditor,
+} from 'vscode';
 import setText from 'vscode-set-text';
 import merge from 'lodash.merge';
-import {loadConfig, optimize} from 'svgo';
-import type {Config, DefaultPlugin, Output, PluginConfig} from 'svgo';
-
-const defaultPlugins: Array<DefaultPlugin['name']> = [
-  'removeDoctype',
-  'removeXMLProcInst',
-  'removeComments',
-  'removeMetadata',
-  'removeXMLNS',
-  'removeEditorsNSData',
-  'cleanupAttrs',
-  'inlineStyles',
-  'minifyStyles',
-  'convertStyleToAttrs',
-  'cleanupIDs',
-  'prefixIds',
-  'removeRasterImages',
-  'removeUselessDefs',
-  'cleanupNumericValues',
-  'cleanupListOfValues',
-  'convertColors',
-  'removeUnknownsAndDefaults',
-  'removeNonInheritableGroupAttrs',
-  'removeUselessStrokeAndFill',
-  'removeViewBox',
-  'cleanupEnableBackground',
-  'removeHiddenElems',
-  'removeEmptyText',
-  'convertShapeToPath',
-  'moveElemsAttrsToGroup',
-  'moveGroupAttrsToElems',
-  'collapseGroups',
-  'convertPathData',
-  'convertTransform',
-  'removeEmptyAttrs',
-  'removeEmptyContainers',
-  'mergePaths',
-  'removeUnusedNS',
-  'sortAttrs',
-  'removeTitle',
-  'removeDesc',
-  'removeDimensions',
-  'removeAttrs',
-  'removeAttributesBySelector',
-  'removeElementsByAttr',
-  'addClassesToSVGElement',
-  'removeStyleElement',
-  'removeScriptElement',
-  'addAttributesToSVGElement',
-  'removeOffCanvasPaths',
-  'reusePaths',
-];
+import {
+  loadConfig,
+  optimize,
+  builtinPlugins,
+  type Config,
+  type Output,
+  type PluginConfig,
+} from 'svgo';
 
 function isSvg({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
@@ -71,13 +35,13 @@ function getPluginConfig(): Config {
     },
   };
 
-  for (const plugin of defaultPlugins) {
+  for (const plugin of builtinPlugins) {
     // If plugin is configured by workspace config
-    if (!svgoConfig.has(plugin)) {
+    if (!svgoConfig.has(plugin.name)) {
       continue;
     }
 
-    defaultPlugin.params.overrides[plugin] = svgoConfig.get<boolean>(plugin);
+    defaultPlugin.params.overrides[plugin.name] = svgoConfig.get<boolean>(plugin.name);
   }
 
   const plugins: PluginConfig[] = [defaultPlugin];
