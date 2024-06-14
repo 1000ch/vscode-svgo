@@ -294,9 +294,9 @@
   "xo": {
     "space": 2,
     "rules": {
-			"@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
       "@typescript-eslint/no-empty-function": "off"
-		}
+    }
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
