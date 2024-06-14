@@ -19,18 +19,13 @@ import {
   type PluginConfig,
 } from 'svgo';
 
-/** Name of all plugins that are enabled/invoked by default. */
-const defaultPlugins = new Set(
-  builtinPlugins
-    .find(p => p.name === 'preset-default')
-    .plugins
-    .map(p => p.name),
-);
+const presetDefault = builtinPlugins.find(p => p.name === 'preset-default');
 
-/** Name of all builtin plugins, excluding presets. */
-const builtin = builtinPlugins
-  .filter(p => !p.isPreset)
-  .map(p => p.name);
+// Name of all plugins that are enabled/invoked by default.
+const defaultPlugins = new Set(presetDefault.plugins.map(p => p.name));
+
+// Name of all builtin plugins, excluding presets.
+const builtins = builtinPlugins.filter(p => !p.isPreset).map(p => p.name);
 
 function isSvg({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
@@ -49,7 +44,7 @@ function getPluginConfig(): Config {
   };
   const otherPlugins: PluginConfig[] = [];
 
-  for (const plugin of builtin) {
+  for (const plugin of builtins) {
     // If plugin is configured by workspace config
     if (!svgoConfig.has(plugin)) {
       continue;

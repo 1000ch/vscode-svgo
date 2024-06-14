@@ -1,4 +1,4 @@
-# vscode-svgo ![GitHub Actions Status](https://github.com/1000ch/vscode-svgo/workflows/test/badge.svg)
+# vscode-svgo [![test](https://github.com/1000ch/vscode-svgo/actions/workflows/test.yml/badge.svg)](https://github.com/1000ch/vscode-svgo/actions/workflows/test.yml)
 
 Fully featured [SVGO](http://github.com/svg/svgo) plugin for [Visual Studio Code](https://github.com/microsoft/vscode).
 
