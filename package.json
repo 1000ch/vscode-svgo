@@ -335,7 +335,7 @@
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.9",
-    "@types/vscode": "^1.90.0",
+    "@types/vscode": "^1.93.0",
     "typescript": "^5.4.5",
     "xo": "^0.58.0"
   },
