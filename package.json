@@ -330,8 +330,7 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "svgo": "^4.0.0-rc.1",
-    "vscode-set-text": "^1.0.0"
+    "svgo": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.9",

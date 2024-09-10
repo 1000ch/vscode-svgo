@@ -8,7 +8,7 @@ import {
   type TextDocument,
   type TextEditor,
 } from 'vscode';
-import setText from 'vscode-set-text';
+import setText from './set-text';
 import merge from 'lodash.merge';
 import {
   loadConfig,
