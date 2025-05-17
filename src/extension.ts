@@ -8,19 +8,20 @@ import {
   type TextDocument,
   type TextEditor,
 } from 'vscode';
-import setText from './set-text';
 import merge from 'lodash.merge';
 import {
   loadConfig,
   optimize,
   builtinPlugins,
-  type Config
+  type Config,
+  type PluginConfig,
 } from 'svgo';
+import setText from './set-text.js';
 
 const presetDefault = builtinPlugins.find(p => p.name === 'preset-default');
 
 // Name of all plugins that are enabled/invoked by default.
-const defaultPlugins = new Set(presetDefault.plugins.map(p => p.name));
+const defaultPlugins = new Set(presetDefault?.plugins?.map(p => p.name));
 
 // Name of all builtin plugins, excluding presets.
 const builtins = builtinPlugins.filter(p => !p.isPreset).map(p => p.name);
@@ -33,14 +34,14 @@ function getPluginConfig(): Config {
   const svgoConfig = workspace.getConfiguration('svgo');
 
   // Use 'preset-default' plugin to override defaults
-  // https://github.com/svg/svgo#configuration
-  const defaultPlugin = {
+  // https://svgo.dev/docs/preset-default/
+  const defaultPlugin: PluginConfig = {
     name: 'preset-default',
     params: {
       overrides: {},
     },
   };
-  const otherPlugins = [];
+  const otherPlugins: PluginConfig[] = [];
 
   for (const plugin of builtins) {
     // If plugin is configured by workspace config
@@ -51,6 +52,7 @@ function getPluginConfig(): Config {
     if (defaultPlugins.has(plugin)) {
       defaultPlugin.params.overrides[plugin] = svgoConfig.get<boolean>(plugin);
     } else if (svgoConfig.get<boolean>(plugin)) {
+      // @ts-expect-error: weird type error
       otherPlugins.push(plugin);
     }
   }

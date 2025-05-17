@@ -1,11 +1,12 @@
 import {
   Position,
   Range,
-  type TextEditor
+  type TextEditor,
 } from 'vscode';
 
-export default function(text: string, editor: TextEditor): Thenable<void> {
+export default function setText(text: string, editor: TextEditor): Thenable<void> {
   return new Promise<void>(resolve => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     editor.edit(builder => {
       const {document} = editor;
       const lastLine = document.lineAt(document.lineCount - 1);
