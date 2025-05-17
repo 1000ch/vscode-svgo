@@ -24,6 +24,9 @@
     "build": "tsc",
     "test": "xo"
   },
+  "activationEvents": [
+    "onLanguage:xml"
+  ],
   "contributes": {
     "commands": [
       {
