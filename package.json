@@ -339,7 +339,7 @@
     "@types/lodash.merge": "^4.6.9",
     "@types/vscode": "^1.100.0",
     "typescript": "^5.6.2",
-    "xo": "^0.59.3"
+    "xo": "^1.0.5"
   },
   "engines": {
     "vscode": "^1.100.0"
