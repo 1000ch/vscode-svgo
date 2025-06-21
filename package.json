@@ -308,7 +308,7 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "svgo": "^4.0.0-rc.4"
+    "svgo": "^4.0.0"
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.9",
