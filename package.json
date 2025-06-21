@@ -55,11 +55,11 @@
         "svgo.cleanupIds": {
           "type": "boolean",
           "default": true,
-          "description": "emoves unused IDs, and minifys IDs that are referenced by other elements."
+          "description": "Removes unused IDs, and minifies IDs that are referenced by other elements."
         },
         "svgo.cleanupListOfValues": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Rounds numeric values in attributes, such as those found in viewBox, enable-background, and points."
         },
         "svgo.cleanupNumericValues": {
@@ -212,7 +212,7 @@
           "default": false,
           "description": "Removes inline JPEGs, PNGs, and GIFs from the document."
         },
-        "svgo.removeScriptElement": {
+        "svgo.removeScripts": {
           "type": "boolean",
           "default": false,
           "description": "Removes all scripts from the document. SVGs can be interactive through JavaScript. However, unless the SVG is coming from a trusted source, it's strongly advised to strip off JavaScript to avoid XSS attacks."
@@ -224,7 +224,7 @@
         },
         "svgo.removeTitle": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Removes the <title> element from the document. This plugin may have significant accessibility implications. The purpose of <title> is to provide users of assistive technologies the means to get a summary of the SVG if they're not able to view it."
         },
         "svgo.removeUnknownsAndDefaults": {
@@ -249,7 +249,7 @@
         },
         "svgo.removeViewBox": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Removes the viewBox attribute where it matches the documents width and height."
         },
         "svgo.removeXMLNS": {
@@ -264,7 +264,7 @@
         },
         "svgo.removeXlink": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Removes XLink namespace prefixes and converts references to XLink attributes to the native SVG equivalent."
         },
         "svgo.reusePaths": {
