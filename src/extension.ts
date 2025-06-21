@@ -98,14 +98,14 @@ async function getConfig(config: Config): Promise<Config> {
   return merge(pluginConfig, projectConfig, config);
 }
 
-async function processTextEditor(textEditor: TextEditor, config?: Config) {
+async function processTextEditor(textEditor: TextEditor, config?: Config, cascdeConfig = true) {
   if (!isSvg(textEditor.document)) {
     return;
   }
 
-  const mergedConfig = await getConfig(config);
+  const finalConfig = cascdeConfig ? await getConfig(config) : config;
   const text = textEditor.document.getText();
-  const {data} = optimize(text, mergedConfig);
+  const {data} = optimize(text, finalConfig);
   await setText(data, textEditor);
 }
 
@@ -138,13 +138,14 @@ async function format() {
   }
 
   const config: Config = {
+    plugins: [],
     js2svg: {
       pretty: true,
     },
   };
 
   try {
-    await processTextEditor(window.activeTextEditor, config);
+    await processTextEditor(window.activeTextEditor, config, false);
     await window.showInformationMessage('Prettified current SVG file');
   } catch (error: unknown) {
     console.error(error);
