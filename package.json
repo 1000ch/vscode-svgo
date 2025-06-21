@@ -42,16 +42,6 @@
       "type": "object",
       "title": "SVGO",
       "properties": {
-        "svgo.addClassesToSVGElement": {
-          "type": "boolean",
-          "default": false,
-          "description": "Overrides the class attribute in the outer most <svg> element, omitting duplicates or null classes if found in your configuration."
-        },
-        "svgo.addAttributesToSVGElement": {
-          "type": "boolean",
-          "default": false,
-          "description": "Adds attributes to the outer most <svg> element in the document. This is not an optimization and will increase the size of SVG documents."
-        },
         "svgo.cleanupAttrs": {
           "type": "boolean",
           "default": true,
@@ -152,16 +142,6 @@
           "default": false,
           "description": "Prefix element IDs and class names with the filename or another arbitrary string. This is useful for reducing the likeliness of ID conflicts when multiple vectors are inlined into the same document."
         },
-        "svgo.removeAttributesBySelector": {
-          "type": "boolean",
-          "default": false,
-          "description": "Removes specific attributes from elements that match a CSS selector."
-        },
-        "svgo.removeAttrs": {
-          "type": "boolean",
-          "default": false,
-          "description": "Remove attributes from elements matching a custom syntax."
-        },
         "svgo.removeComments": {
           "type": "boolean",
           "default": true,
@@ -191,11 +171,6 @@
           "type": "boolean",
           "default": true,
           "description": "Removes all XML namespaces, elements, and attributes associated with popular vector editing software. This plugin is completely safe to use before redistributing your SVG or incorporating it into a larger document."
-        },
-        "svgo.removeElementsByAttr": {
-          "type": "boolean",
-          "default": false,
-          "description": "Removes arbitrary elements by ID or className."
         },
         "svgo.removeEmptyAttrs": {
           "type": "boolean",

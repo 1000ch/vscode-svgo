@@ -15,6 +15,7 @@ import {
   builtinPlugins,
   type Config,
   type PluginConfig,
+  type BuiltinsWithOptionalParams,
 } from 'svgo';
 import setText from './set-text.js';
 
@@ -30,6 +31,11 @@ function isSvg({languageId, fileName}: TextDocument): boolean {
   return languageId === 'xml' && fileName.endsWith('.svg');
 }
 
+function isSupportedPlugin(plugin: string): plugin is keyof BuiltinsWithOptionalParams {
+  const svgoConfig = workspace.getConfiguration('svgo');
+  return svgoConfig.has(plugin);
+}
+
 function getPluginConfig(): Config {
   const svgoConfig = workspace.getConfiguration('svgo');
 
@@ -41,18 +47,18 @@ function getPluginConfig(): Config {
       overrides: {},
     },
   };
-  const otherPlugins: PluginConfig[] = [];
+
+  const otherPlugins: Array<keyof BuiltinsWithOptionalParams> = [];
 
   for (const plugin of builtins) {
     // If plugin is configured by workspace config
-    if (!svgoConfig.has(plugin)) {
+    if (!isSupportedPlugin(plugin)) {
       continue;
     }
 
     if (defaultPlugins.has(plugin)) {
       defaultPlugin.params.overrides[plugin] = svgoConfig.get<boolean>(plugin);
     } else if (svgoConfig.get<boolean>(plugin)) {
-      // @ts-expect-error: weird type error
       otherPlugins.push(plugin);
     }
   }
