@@ -342,7 +342,7 @@
     "xo": "^0.59.3"
   },
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.98.0"
   },
   "icon": "img/icon.png"
 }
