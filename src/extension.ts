@@ -98,12 +98,12 @@ async function getConfig(config: Config): Promise<Config> {
   return merge(pluginConfig, projectConfig, config);
 }
 
-async function processTextEditor(textEditor: TextEditor, config?: Config, cascdeConfig = true) {
+async function processTextEditor(textEditor: TextEditor, config?: Config, cascadeConfig = true) {
   if (!isSvg(textEditor.document)) {
     return;
   }
 
-  const finalConfig = cascdeConfig ? await getConfig(config) : config;
+  const finalConfig = cascadeConfig ? await getConfig(config) : config;
   const text = textEditor.document.getText();
   const {data} = optimize(text, finalConfig);
   await setText(data, textEditor);
