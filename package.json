@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "svgo",
   "displayName": "svgo",
   "version": "3.3.0",
@@ -299,13 +300,6 @@
       ]
     }
   },
-  "xo": {
-    "space": 2,
-    "rules": {
-      "@typescript-eslint/prefer-nullish-coalescing": "off",
-      "@typescript-eslint/no-empty-function": "off"
-    }
-  },
   "dependencies": {
     "lodash.merge": "^4.6.2",
     "svgo": "^4.0.0"
@@ -314,7 +308,7 @@
     "@types/lodash.merge": "^4.6.9",
     "@types/vscode": "^1.98.0",
     "typescript": "^5.6.2",
-    "xo": "^0.59.3"
+    "xo": "^1.2.3"
   },
   "engines": {
     "vscode": "^1.98.0"
