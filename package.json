@@ -2,7 +2,7 @@
   "type": "module",
   "name": "svgo",
   "displayName": "svgo",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "private": true,
   "description": "Fully featured SVGO plugin for Visual Studio Code",
   "categories": [
